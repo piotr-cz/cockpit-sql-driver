@@ -1,0 +1,11 @@
+<phpunit
+    bootstrap="tests/bootstrap.php"
+    colors="true"
+    cacheResult="false"
+>
+    <testsuites>
+        <testsuite name="integration">
+            <directory>tests/lib</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

@@ -1,0 +1,47 @@
+{
+    "name": "piotr-cz/cockpit-sql-driver",
+    "description": "SQL Driver for Cockpit CMS",
+    "keywords": ["cockpit", "SQL", "MariaDB", "MySQL", "PostgreSQL"],
+    "type": "cockpit-module",
+    "homepage": "https://github.com/piotr-cz/cockpit-mongosql",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Piotr Konieczny",
+            "email": "hello@piotr.cz",
+            "homepage": "https://www.piotr.cz"
+        }
+    ],
+    "require": {
+        "php": ">= 7.1",
+        "ext-pdo": "*",
+        "ext-json": "*",
+        "composer/installers": "^1.2"
+    },
+    "require-dev": {
+        "aheinze/cockpit": "^0.9",
+        "phpunit/phpunit": "^8.3"
+    },
+    "suggest": {
+        "aheinze/cockpit": "Please install Cockpit before installing this addon",
+        "ext-pdo_mysql": "For MySQL support",
+        "ext-pdo_pgsql": "For PostgreSQL support"
+    },
+    "autoload": {
+        "psr4": {
+            "MongoSql\\": "lib/MongoSql/"
+        },
+        "files": [
+            "src/MongoHybridClientWrapper.php"
+        ]
+    },
+    "scripts": {
+        "test-phpunit": "phpunit"
+    },
+    "extra": {
+        "installer-name": "SqlDriver",
+        "installer-disable": [
+            "SqlDriver"
+        ]
+    }
+}
