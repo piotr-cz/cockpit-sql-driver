@@ -64,11 +64,8 @@ class ResultIterator extends IteratorIterator implements ResultInterface
     {
         // Apply hasOne
         foreach ($this->hasOne as $collections) {
-
             foreach ($collections as $fkey => $collection) {
-
                 if (!empty($doc[$fkey])) {
-
                     $docFkey = $doc[$fkey];
 
                     if (!isset($this->hasOneCache[$collection][$docFkey])) {
@@ -105,11 +102,8 @@ class ResultIterator extends IteratorIterator implements ResultInterface
     {
         // Apply hasMany
         if (!empty($doc['_id'])) {
-
             foreach ($this->hasMany as $collections) {
-
                 foreach ($collections as $collection => $fkey) {
-
                     if (!isset($this->hasManyCache[$collection][$fkey])) {
                         $this->hasManyCache[$collection] = $this->driver->find($collection, [
                             'filter' => [$fkey => $doc['_id']]

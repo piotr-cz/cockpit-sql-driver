@@ -99,14 +99,15 @@ class Collection implements CollectionInterface
     {
         $doc['_id'] = createMongoDbLikeId();
 
-        $stmt = $this->connection->prepare(<<<SQL
+        $stmt = $this->connection->prepare(
+            <<<SQL
 
-            INSERT INTO
-                "{$this->collectionName}" ("document")
+                INSERT INTO
+                    "{$this->collectionName}" ("document")
 
-            VALUES (
-                :data
-            )
+                VALUES (
+                    :data
+                )
 SQL
         );
 
@@ -123,15 +124,16 @@ SQL
      */
     public function updateMany(array $filter = [], array $update): bool
     {
-        $stmt = $this->connection->prepare(<<<SQL
+        $stmt = $this->connection->prepare(
+            <<<SQL
 
-            UPDATE
-                "{$this->collectionName}"
+                UPDATE
+                    "{$this->collectionName}"
 
-            SET
-                "document" = :data
+                SET
+                    "document" = :data
 
-            {$this->queryBuilder->buildWhere($filter)}
+                {$this->queryBuilder->buildWhere($filter)}
 SQL
         );
 
@@ -147,12 +149,13 @@ SQL
      */
     public function deleteMany(array $filter = []): bool
     {
-        $stmt = $this->connection->prepare(<<<SQL
+        $stmt = $this->connection->prepare(
+            <<<SQL
 
-            DELETE FROM
-                "{$this->collectionName}"
+                DELETE FROM
+                    "{$this->collectionName}"
 
-            {$this->queryBuilder->buildWhere($filter)}
+                {$this->queryBuilder->buildWhere($filter)}
 SQL
         );
 
@@ -172,15 +175,16 @@ SQL
             return iterator_count($this->find($filter));
         }
 
-        $stmt = $this->connection->prepare(<<<SQL
+        $stmt = $this->connection->prepare(
+            <<<SQL
 
-            SELECT
-                COUNT("document")
+                SELECT
+                    COUNT("document")
 
-            FROM
-                "{$this->collectionName}"
+                FROM
+                    "{$this->collectionName}"
 
-            {$this->queryBuilder->buildWhere($filter)}
+                {$this->queryBuilder->buildWhere($filter)}
 SQL
         );
 
@@ -194,10 +198,11 @@ SQL
      */
     public function drop(): bool
     {
-        $stmt = $this->connection->prepare(<<<SQL
+        $stmt = $this->connection->prepare(
+            <<<SQL
 
-            DROP TABLE IF EXISTS
-                "{$this->collectionName}"
+                DROP TABLE IF EXISTS
+                    "{$this->collectionName}"
 SQL
         );
 
@@ -223,7 +228,8 @@ SQL
 }
 
 // Copied from MongoLite\Database
-function createMongoDbLikeId() {
+function createMongoDbLikeId()
+{
 
     // based on https://gist.github.com/h4cc/9b716dc05869296c1be6
 

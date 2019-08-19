@@ -1,2 +1,6 @@
+# Vendor
 /vendor
+
+# Local configs
 /phpunit.xml
+/tests/config.php

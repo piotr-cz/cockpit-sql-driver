@@ -1,0 +1,19 @@
+<?php
+/**
+ * PHP CS Fixer config
+ * @see {@link https://github.com/FriendsOfPHP/PHP-CS-Fixer}
+ */
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('vendor')
+    ->in(__DIR__)
+;
+
+return PhpCsFixer\Config::create()
+    ->setRules([
+        // Note: PSR12 not avail (see {@link https://github.com/FriendsOfPHP/PHP-CS-Fixer/issues/4502})
+        '@PSR2' => true,
+        'single_import_per_statement' => false,
+    ])
+    ->setUsingCache(false)
+    ->setFinder($finder)
+;

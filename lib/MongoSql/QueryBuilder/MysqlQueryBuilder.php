@@ -44,31 +44,31 @@ class MysqlQueryBuilder extends QueryBuilder
                     $this->qv($value),
                 ]);
 
-            case '$ne' :
+            case '$ne':
                 return vsprintf('%s <> %s', [
                     $pathSelector,
                     $this->qv($value),
                 ]);
 
-            case '$gte' :
+            case '$gte':
                 return vsprintf('%s >= %s', [
                     $pathSelector,
                     $this->qv($value),
                 ]);
 
-            case '$gt' :
+            case '$gt':
                 return vsprintf('%s > %s', [
                     $pathSelector,
                     $this->qv($value),
                 ]);
 
-            case '$lte' :
+            case '$lte':
                 return vsprintf('%s <= %s', [
                     $pathSelector,
                     $this->qv($value),
                 ]);
 
-            case '$lt' :
+            case '$lt':
                 return vsprintf('%s < %s', [
                     $pathSelector,
                     $this->qv($value),

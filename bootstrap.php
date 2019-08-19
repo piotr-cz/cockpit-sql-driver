@@ -25,7 +25,7 @@ spl_autoload_register(function (string $fqcn): void {
  *
  * Note: classes may be autoloaded after app has booted which happens after module is booted
  */
-$app->on('cockpit.bootstrap', function(): void {
+$app->on('cockpit.bootstrap', function (): void {
     $dbConfig = $this['config']['database'];
 
     // Skip when server other than sqldriver

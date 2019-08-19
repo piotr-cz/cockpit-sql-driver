@@ -28,15 +28,16 @@
         "ext-pdo_pgsql": "For PostgreSQL support"
     },
     "autoload": {
-        "psr4": {
+        "psr-4": {
             "MongoSql\\": "lib/MongoSql/"
         },
         "files": [
-            "src/MongoHybridClientWrapper.php"
+            "lib/MongoHybridClientWrapper.php"
         ]
     },
     "scripts": {
-        "test-phpunit": "phpunit"
+        "test-phpunit": "phpunit",
+        "fix-phpcs": "php-cs-fixer fix"
     },
     "extra": {
         "installer-name": "SqlDriver",
