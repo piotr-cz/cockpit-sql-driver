@@ -15,65 +15,78 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 
 ### Manual
 
-Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/releases/latest) and place in under `cockpit/addons/SqlDriver` folder
+Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/releases/latest) and place in under `cockpit/addons/SqlDriver` directory
 
 
 ### Using composer
 
 1. Make sure path to cockpit addons are defined in composer.json
 
-  ```json
-  "extra": {
-      "installer-paths": {
-          "public/cockpit/addons/{$name}": ["type:cockpit-module"]
-      }
-  }
-  ```
+   ```json
+   {
+       "name": "my-project",
+       "extra": {
+           "installer-paths": {
+               "public/cockpit/addons/{$name}": ["type:cockpit-module"]
+           }
+       }
+   }
+   ```
 
 2. Install addon using composer
-  ```sh
-  composer require piotr-cz/cockpit-sql-driver
-  ```
+   ```sh
+   composer require piotr-cz/cockpit-sql-driver
+   ```
 
 
 ## Configuration
 
-Using `config/config.php` file:
+Example configuration for `/config/config.php` file:
 
 ```php
+<?php
 return [
+    # Cockpit configuration
+    # …
+
+    # Use SQL Driver as main data storage
     'database' => [
         'server' => 'sqldriver',
+        # Connection options
         'options' => [
-            'connection' => 'mysql'      // One of 'mysql'|'pgsql'
-            'host'       => 'localhost', // Optional, defaults to 'localhost'
-            'port'       => 3306,        // Optional, defaults to 3306 for MySQL and 5432 for PostgreSQL
+            'connection' => 'mysql'          # One of 'mysql'|'pgsql'
+            'host'       => 'localhost',     # Optional, defaults to 'localhost'
+            'port'       => 3306,            # Optional, defaults to 3306 (MySQL) or 5432 (PostgreSQL)
             'dbname'     => 'DATABASE_NAME',
             'username'   => 'USER',
-            'password'   => 'PASSWORD'
+            'password'   => 'PASSWORD',
+            'charset'    => 'UTF8'           # Optional, defaults to 'UTF8'
         ],
-        // PDO Attributes
-        // General https://www.php.net/manual/en/pdo.setattribute.php
-        // MySQL https://www.php.net/manual/en/ref.pdo-mysql.php#pdo-mysql.constants
+        # Connection specific options
+        # General: https://www.php.net/manual/en/pdo.setattribute.php
+        # MySQL specific: https://www.php.net/manual/en/ref.pdo-mysql.php#pdo-mysql.constants
         'driverOptions' => [],
-    ]
+    ],
 ];
 ```
 
 
+Rererence: Cockpit docs > [Configuration](https://getcockpit.com/documentation/reference/configuration)
+
+
 ## Database data migration (Cockpit 0.6.0+)
 
-1. Export data
+1. Export data to `/migration` dir
    ``` sh
-   php cp export --target migration
+   ./cp export --target migration
    ```
-2. Switch database to _sqldriver_ (See [Configuration](#configuration))
-3. Import data
+2. Switch database to _sqldriver_ (see [Configuration](#configuration))
+3. Import data from `/migration` dir
    ```sh
-   php cp import --src migration
+   ./cp import --src migration
    ```
 
-Reference: [CLI](https://getcockpit.com/documentation/reference/CLI)
+Reference: Cockpit docs > [CLI](https://getcockpit.com/documentation/reference/CLI)
 
 
 ## Testing
@@ -86,7 +99,7 @@ Reference: [CLI](https://getcockpit.com/documentation/reference/CLI)
 
 2. Configure test database: Copy `/tests/conifg.php.dist` to `/tests/config.php` and configure as in [configuration](#configuration)
 
-3. Run phpunit
+3. Run tests with PHPUnit
    ```sh
    ./vendor/bin/phpunit
    ```
