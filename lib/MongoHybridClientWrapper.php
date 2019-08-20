@@ -14,14 +14,16 @@ class MongoHybridClientWrapper extends MongoHybridClient
      */
     public function __construct(string $server, array $options = [], array $driverOptions = [])
     {
-        // Validate support by server prefix
+        // Fall back to Cockpit drivers client
         if ($server !== Driver::SERVER_NAME) {
             parent::__construct($server, $options, $driverOptions);
 
             // Could not initialize driver fid given server
             if (!$this->driver) {
-                throw new DriverException(sprintf('Could not initialize for %s', $server));
+                throw new DriverException(sprintf('Could not initialize driver %s', $server));
             }
+
+            return;
         }
 
         // Resolve drivers' FQCN
@@ -36,5 +38,17 @@ class MongoHybridClientWrapper extends MongoHybridClient
 
         // Set same type as MongoLite
         $this->type = 'mongolite';
+    }
+
+    /**
+     * Check if driver is subclass of given class
+     * useful for feature checking, should use interfaces
+     *
+     * @param string $className
+     * @return bool
+     */
+    public function driverImplements(string $className): bool
+    {
+        return $this->driver instanceof $className;
     }
 }

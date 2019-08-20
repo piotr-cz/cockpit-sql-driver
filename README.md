@@ -1,10 +1,10 @@
-# SQL Driver for Cockpit CMS (next)
+# SQL Driver for Cockpit CMS (next/ legacy)
 
-This addon allows to use MySQL or PostgreSQL databases instead of default Mongo/ SQLite.
+This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default Mongo/ SQLite.
 
 
 ## Requirements
-
+- Cockpit
 - MySQL 5.7.9/ MariaDB 10.2.3/ PostgreSQL 9.4
 - PHP 7.1
 - PHP extensions: *pdo*, *pdo_mysql*/ *pdo_pgsql*
@@ -57,7 +57,7 @@ return [
         // MySQL https://www.php.net/manual/en/ref.pdo-mysql.php#pdo-mysql.constants
         'driverOptions' => [],
     ]
-]
+];
 ```
 
 
@@ -67,24 +67,24 @@ return [
    ``` sh
    php cp export --target migration
    ```
-2. Switch database to _sqldriver_ (See [#configuration])
+2. Switch database to _sqldriver_ (See [Configuration](#configuration))
 3. Import data
    ```sh
    php cp import --src migration
    ```
 
-Reference: [CLI]](https://getcockpit.com/documentation/reference/CLI)
+Reference: [CLI](https://getcockpit.com/documentation/reference/CLI)
 
 
 ## Testing
 
-1. Install dependencies
+1. Install dependencies [with --no-plugins](https://github.com/composer/installers/issues/430)
    ```sh
    cd cockpit/addons/SqlDriver
    composer install --no-plugins
    ```
 
-2. Configure test database: Copy `/tests/conifg.php.dist` to `/tests/config.php` and configure as in [#configuration]
+2. Configure test database: Copy `/tests/conifg.php.dist` to `/tests/config.php` and configure as in [configuration](#configuration)
 
 3. Run phpunit
    ```sh
@@ -94,7 +94,37 @@ Reference: [CLI]](https://getcockpit.com/documentation/reference/CLI)
 
 ## Drawbacks
 
-_TODO_
+Cockpit doesn't provide public API to register custom databse drivers so this module monkey-patches cockpit Driver selector client.
+This means that there is guarantee that this addon will work in future versions of Cockpit.
+
+### Collection filters
+
+#### Not implemented
+
+- `$func`/ `$fn`/ `$f`
+- `$fuzzy`
+
+#### Works differently
+
+- callable
+
+  [unlike SQLite](https://www.php.net/manual/en/pdo.sqlitecreatefunction.php) PDO MySQL driver doesn't have support for User Defined Functions in php language so callable is evaluated on every result fetch
+
+- `$in`, `$nin`
+
+  when databse value is an array, evaluates to false
+
+- `$regexp`
+  - MySQL implemented via [REGEXP](https://dev.mysql.com/doc/refman/5.7/en/regexp.html) + case insensitive
+  - PostgreSQL impemeted via [POSIX Regular Expressions](https://www.postgresql.org/docs/9.4/functions-matching.html#FUNCTIONS-POSIX-REGEXP) + case insensitive
+
+  wrapping expression in `//` or adding flags like `/foobar/i` doesn't work, as MySQL and PosgreSQL Regexp functions don't support flags
+
+- `$text`
+  - MySQL implemeted via [LIKE](https://dev.mysql.com/doc/refman/5.7/en/string-comparison-functions.html#operator_like)
+  - PostgreSQL implementad via [LIKE](https://www.postgresql.org/docs/9.4/functions-matching.html#FUNCTIONS-LIKE)
+
+  options are not supported (_$minScore_, _$distance_, _$search_)
 
 ## Manual database optimisations
 

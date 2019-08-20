@@ -107,9 +107,9 @@ SQL;
 
         try {
             /* Query without parameters (via PDO::prepare) to avoid problems with reserved characters (? and :)
-            * driver option PDO::ATTR_EMULATE_PREPARES must be set to true - see {@link https://bugs.php.net/bug.php?id=74220}
-            * This is fixed in php 7.4-beta.1 {@link https://wiki.php.net/rfc/pdo_escape_placeholders}
-            */
+             * driver option PDO::ATTR_EMULATE_PREPARES must be set to true - see {@link https://bugs.php.net/bug.php?id=74220}
+             * This is fixed in php 7.4-beta.1 {@link https://wiki.php.net/rfc/pdo_escape_placeholders}
+             */
 
             // $stmt = $this->connection->prepare($sql, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_COLUMN]);
             // @throws \PDOException: SQLSTATE[HY093]: Invalid parameter number: no parameters were bound  on ATTR_EMULATE_PREPARES true

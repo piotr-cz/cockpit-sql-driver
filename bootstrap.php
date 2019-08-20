@@ -6,16 +6,7 @@ use MongoHybridClientWrapper as Client;
 use MongoSql\Driver\Driver;
 
 // Set autoloader (may use composer generated if avail)
-spl_autoload_register(function (string $fqcn): void {
-
-    // Resolve path to class name in fs
-    $class_path = sprintf('%s/lib/%s.php', __DIR__, str_replace('\\', '/', $fqcn));
-
-    if (file_exists($class_path)) {
-        include_once $class_path;
-    }
-});
-
+require_once __DIR__ . '/autoload.php';
 
 /**
  * Register on bootstrap
@@ -30,7 +21,7 @@ $app->on('cockpit.bootstrap', function (): void {
 
     // Skip when server other than sqldriver
     if ($dbConfig['server'] !== Driver::SERVER_NAME) {
-        // return;
+        return;
     }
 
     // Overwrite storage in registry

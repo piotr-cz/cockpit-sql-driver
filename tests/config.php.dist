@@ -5,7 +5,7 @@
 // Provide database for tests
 return [
     'database' => [
-        'server' => 'mongosql',
+        'server' => 'sqldriver',
         'options' => [
             'connection' => 'mysql',
             'host'       => 'localhost',

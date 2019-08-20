@@ -27,22 +27,21 @@
         "ext-pdo_mysql": "For MySQL support",
         "ext-pdo_pgsql": "For PostgreSQL support"
     },
-    "autoload": {
+    "autoload-dev": {
         "psr-4": {
-            "MongoSql\\": "lib/MongoSql/"
+            "Test\\": "tests/",
+            "": [
+                "vendor/aheinze/cockpit/lib/",
+                "vendor/aheinze/cockpit/vendor/"
+            ]
         },
-        "files": [
-            "lib/MongoHybridClientWrapper.php"
-        ]
+        "exclude-from-classmap": "vendor/aheinze/cockpit/lib/vendor/"
     },
     "scripts": {
-        "test-phpunit": "phpunit",
-        "fix-phpcs": "php-cs-fixer fix"
+        "test:phpunit": "phpunit",
+        "phpcs:fix": "php-cs-fixer fix"
     },
     "extra": {
-        "installer-name": "SqlDriver",
-        "installer-disable": [
-            "SqlDriver"
-        ]
+        "installer-name": "SqlDriver"
     }
 }

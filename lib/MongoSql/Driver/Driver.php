@@ -56,7 +56,7 @@ abstract class Driver implements DriverInterface
      *   @var string $password
      * }
      * @param array $driverOptions
-     * @throws \MysqlJson\DriverException
+     * @throws \MongoSql\DriverException
      */
     public function __construct(array $options, array $driverOptions = [])
     {
@@ -84,7 +84,7 @@ abstract class Driver implements DriverInterface
     /**
      * Assert features are supported by database
      *
-     * @throws \MysqlJson\DriverException
+     * @throws \MongoSql\DriverException
      */
     protected function assertIsSupported(): void
     {
