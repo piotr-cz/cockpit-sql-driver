@@ -97,7 +97,7 @@ Reference: Cockpit docs > [CLI](https://getcockpit.com/documentation/reference/C
    composer install --no-plugins
    ```
 
-2. Configure test database: Copy `/tests/conifg.php.dist` to `/tests/config.php` and configure as in [configuration](#configuration)
+2. Configure test database: copy [`/phpunit.xml.dist`](./phpunit.xml.dist) to `/phpunit.xml` and set up variables as in [configuration](#configuration)
 
 3. Run tests with PHPUnit
    ```sh

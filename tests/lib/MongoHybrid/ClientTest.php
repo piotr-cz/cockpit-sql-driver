@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 
 use MongoHybridClientWrapper;
+use MongoSql\Driver\Driver;
 
 /**
  * Test MongoHybrid\Client configured with driver
@@ -49,9 +50,7 @@ class ClientTest extends TestCase
      */
     public static function setUpBeforeClass(): void
     {
-        $globalTestConfig = require __DIR__ . '/../../config.php';
-
-        $databaseConfig = $globalTestConfig['database'];
+        $databaseConfig = static::getStorageConfig();
 
         // Create new storage
         static::$storage = new MongoHybridClientWrapper(
@@ -59,6 +58,47 @@ class ClientTest extends TestCase
             $databaseConfig['options'],
             $databaseConfig['driverOptions'] ?? []
         );
+    }
+
+    /**
+     * Get storage config
+     *
+     * @return array
+     */
+    protected static function getStorageConfig(): array
+    {
+        // Use fallback config file (not documented)
+        $fallbackConfigFile = __DIR__ . '/../../config.php';
+
+        if (is_file($fallbackConfigFile)) {
+            $fallbackConfig = require_once $fallbackConfigFile;
+
+            if (is_array($fallbackConfig)) {
+                return $fallbackConfig['database'];
+            }
+        }
+
+        $server = $GLOBALS['db_server'];
+        $driverOptions = isset($GLOBALS['db_driverOptions'])
+            ? json_decode($GLOBALS['db_driverOptions'], true)
+            : [];
+
+        return [
+            'server' => $server,
+            'driverOptions' => $driverOptions,
+            'options' => $server === Driver::SERVER_NAME
+                ? [
+                    'connection' => $GLOBALS['db_options_connection'],
+                    'host'       => $GLOBALS['db_options_host'] ?? null,
+                    'port'       => $GLOBALS['db_options_port'] ?? null,
+                    'dbname'     => $GLOBALS['db_options_dbname'],
+                    'username'   => $GLOBALS['db_options_username'],
+                    'password'   => $GLOBALS['db_options_password'],
+                    'charset'    => $GLOBALS['db_options_charset'] ?? null,
+                ] : [
+                    'dbname'     => $GLOBALS['db_options_dbname']
+                ],
+        ];
     }
 
     /**

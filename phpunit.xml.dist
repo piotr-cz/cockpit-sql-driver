@@ -4,8 +4,19 @@
     colors="true"
     cacheResult="false"
 >
+    <php>
+        <var name="db_server" value="sqldriver" />
+        <var name="db_options_connection" value="mysql" />
+        <var name="db_options_host" value="localhost" />
+        <var name="db_options_port" value="3306" />
+        <var name="db_options_dbname" value="DATABASE_NAME" />
+        <var name="db_options_username" value="USER" />
+        <var name="db_options_password" value="PASSWORD" />
+        <var name="db_options_charset" value="UTF8" />
+        <var name="db_driverOptions" value="[]" />
+    </php>
     <testsuites>
-        <testsuite name="integration">
+        <testsuite name="MongoHybrid Integration">
             <directory>tests/lib</directory>
         </testsuite>
     </testsuites>
