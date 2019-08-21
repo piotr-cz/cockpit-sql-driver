@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit
+    bootstrap="tests/bootstrap.php"
+    colors="true"
+    cacheResult="false"
+>
+    <php>
+        <!-- Cockpit doesn't work with :memory:, see https://github.com/agentejo/cockpit/pull/1173 -->
+        <var name="db_server" value="mongolite://:memory:" />
+        <var name="db_options_db" value="cockpitdb" />
+    </php>
+    <testsuites>
+        <testsuite name="MongoHybrid Integration">
+            <directory>tests/lib</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

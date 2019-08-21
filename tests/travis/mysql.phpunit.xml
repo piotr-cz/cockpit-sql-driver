@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpunit
+    bootstrap="tests/bootstrap.php"
+    colors="true"
+    cacheResult="false"
+>
+    <php>
+        <var name="db_server" value="sqldriver" />
+        <var name="db_options_connection" value="mysql" />
+        <var name="db_options_dbname" value="cockpitdb" />
+        <var name="db_options_username" value="travis" />
+        <var name="db_options_password" value="" />
+    </php>
+    <testsuites>
+        <testsuite name="MongoHybrid Integration">
+            <directory>tests/lib</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
