@@ -148,7 +148,27 @@ This means that there is no guarantee that this addon will work in future versio
 
 ## Manual database optimisations
 
-_TODO_
+By default package creates virtual column `_id` with unique index on every created collection.
+
+If you would like to speed up filters on other collection fields add virtual column with suitable index and type
+
+- MySQL:
+
+  ```sql
+  ALTER TABLE
+      `{$tableName}` ADD COLUMN `{$docColumnName}_virtual` INT AS (`document` ->> '$.{$docColumnName}') NOT NULL,
+      ADD UNIQUE | KEY `idx_{$tableName}_{$docColumnName}` (`{$docColumnName}_virtual`);
+  ```
+
+  _Reference: MySQL 5.7 > [CREATE INDEX](https://dev.mysql.com/doc/refman/5.7/en/create-index.html)_
+
+- PosgreSQL:
+
+  ```sql
+  CREATE [UNIQUE] INDEX "idx_{$tableName}_{$columnName}" ON "{$tableName}" ((("document" ->> '{$docColumnName}')::int));
+  ```
+
+  _Reference: PostgreSQL 9.4 > [CREATE INDEX](https://www.postgresql.org/docs/9.4/sql-createindex.html)_
 
 
 ## Copyright and license
