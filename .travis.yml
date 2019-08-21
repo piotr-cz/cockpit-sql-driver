@@ -2,6 +2,8 @@
 # See https://docs.travis-ci.com/user/languages/php/
 # See https://docs.travis-ci.com/user/database-setup/
 #
+# Note: To run tests on PHP 7.1 need to use PHPUnit 7.x
+#
 language: php
 
 php:
@@ -20,8 +22,8 @@ addons:
 # Create build matrix exporting DB variable
 env:
   - DB=mysql
-  - DB=mariadb
-  - DB=pgsql
+#   - DB=mariadb
+#   - DB=pgsql
 #   - DB=sqlite
 #   - DB=mongodb
 
