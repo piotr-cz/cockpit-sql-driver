@@ -26,7 +26,7 @@
         "aheinze/cockpit": "Please install Cockpit before installing this addon",
         "ext-pdo_mysql": "For MySQL support",
         "ext-pdo_pgsql": "For PostgreSQL support",
-        "ext-mongodb": "For running tests with MongoMongoDB"
+        "ext-mongodb": "For running tests with MongoDB"
     },
     "autoload-dev": {
         "psr-4": {
@@ -38,14 +38,16 @@
         },
         "exclude-from-classmap": "vendor/aheinze/cockpit/lib/vendor/"
     },
-    "platform": {
-        "ext-mongodb": "4.0.0"
+    "config": {
+        "platform": {
+            "ext-mongodb": "1.5.0"
+        }
+    },
+    "extra": {
+        "installer-name": "SqlDriver"
     },
     "scripts": {
         "test:phpunit": "phpunit",
         "phpcs:fix": "php-cs-fixer fix"
-    },
-    "extra": {
-        "installer-name": "SqlDriver"
     }
 }
