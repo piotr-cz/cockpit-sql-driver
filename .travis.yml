@@ -4,32 +4,33 @@
 #
 # Note: To run tests on PHP 7.1 need to use PHPUnit 7.x
 #       MySQL 5.7 is default on Ubuntu 16.04 (Xenial) and 18.04 (Bionic)
+#       SQLite is bundled as PHP extension
 #
 dist: bionic
 
 language: php
 
 php:
-  # - 7.1
-  # - 7.2
-  # - 7.3
-  # - 7.4snapshot
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4snapshot
 
+# Start provisioned database services
 services:
   - mysql
   # - mongodb
 
-
-# Note: SQLite is compiled into PHP
+# Available as addons
 addons:
-  # mariadb: '10.3'
-  # posgresql: '9.4'
+  # posgresql: '9.5'
+  # mariadb: '10.2'
 
 # Create build matrix exporting DB variable
 env:
   - DB=mysql
-  # - DB=mariadb
   # - DB=pgsql
+  # - DB=mariadb
   # - DB=sqlite
   # - DB=mongodb
 
