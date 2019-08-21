@@ -26,6 +26,7 @@ class ClientTest extends TestCase
         [
             'content' => 'Lorem ipsum',
             'array' => ['foo'],
+            'utf8' => '🍎',
             '_o' => 1,
             '_created' =>  1546297200.000,
             '_modified' => 1546297200.000,
@@ -33,6 +34,7 @@ class ClientTest extends TestCase
         [
             'content' => 'Etiam tempor',
             'array' => ['foo', 'bar'],
+            'utf8' => '🍌',
             '_o' => 2,
             '_created' =>  1546297200.000,
             '_modified' => 1546297200.000,

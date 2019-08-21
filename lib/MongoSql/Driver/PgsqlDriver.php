@@ -31,6 +31,7 @@ class PgsqlDriver extends Driver
      */
     protected function createConnection(array $options, array $driverOptions = []): PDO
     {
+        // See https://www.php.net/manual/en/ref.pdo-pgsql.connection.php
         return new PDO(
             vsprintf("pgsql:host=%s;port=%s;dbname=%s;user=%s;password=%s;options='--client-encoding=%s'", [
                 $options['host'] ?? 'localhost',

@@ -203,7 +203,7 @@ class MysqlQueryBuilder extends QueryBuilder
                 -- Add unique index on generated column to _id
                 "_id_virtual"       VARCHAR(24) GENERATED ALWAYS AS ({$this->createPathSelector('_id')}) NOT NULL UNIQUE COMMENT 'Id',
                 PRIMARY KEY ("id")
-            )
+            ) ENGINE=InnoDB COLLATE 'utf8mb4_unicode_ci';
 SQL;
     }
 

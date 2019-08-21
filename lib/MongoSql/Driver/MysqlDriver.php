@@ -30,6 +30,7 @@ class MysqlDriver extends Driver
      */
     protected function createConnection(array $options, array $driverOptions = []): PDO
     {
+        // See https://www.php.net/manual/en/ref.pdo-mysql.connection.php
         $connection = new PDO(
             vsprintf('mysql:host=%s;port=%s;dbname=%s;charset=%s', [
                 $options['host'] ?? 'localhost',
