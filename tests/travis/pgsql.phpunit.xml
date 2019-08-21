@@ -13,7 +13,7 @@
     </php>
     <testsuites>
         <testsuite name="MongoHybrid Integration">
-            <directory>tests/lib</directory>
+            <directory>../lib</directory>
         </testsuite>
     </testsuites>
 </phpunit>

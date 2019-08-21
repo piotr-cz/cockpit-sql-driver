@@ -29,7 +29,7 @@ env:
 
 before_script:
   - composer install --no-plugins
-  - sh -c "if [[ '$DB' = 'mysql' || '$DB' = 'mariadb' ]]; then mysql -e 'CREATE DATABASE IF NOT EXISTS cockpitdb;'; fi"
+  - sh -c "if [ '$DB' = 'mysql' ] || [ '$DB' = 'mariadb' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS cockpitdb;'; fi"
 #   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS cockpitdb;' -U postgres; fi"
 #   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cockpitdb;' -U postgres; fi"
 #   - sh -c "if [ '$db' = 'mongodb' ]; then pecl install mongodb; fi"
