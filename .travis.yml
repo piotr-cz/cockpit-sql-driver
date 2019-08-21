@@ -3,38 +3,44 @@
 # See https://docs.travis-ci.com/user/database-setup/
 #
 # Note: To run tests on PHP 7.1 need to use PHPUnit 7.x
+#       MySQL 5.7 is default on Ubuntu 16.04 (Xenial) and 18.04 (Bionic)
 #
+dist: bionic
+
 language: php
 
 php:
-  - 7.1
-#   - 7.2
-#   - 7.3
-#   - 7.4snapshot
+  # - 7.1
+  # - 7.2
+  # - 7.3
+  # - 7.4snapshot
+
+services:
+  - mysql
+  # - mongodb
+
 
 # Note: SQLite is compiled into PHP
 addons:
-  mysql: '5.7.9'
-#   mariadb: '10.2.7'
-#   posgresql: '9.4'
-#   mongodb: '4.0.0'
+  # mariadb: '10.3'
+  # posgresql: '9.4'
 
 # Create build matrix exporting DB variable
 env:
   - DB=mysql
-#   - DB=mariadb
-#   - DB=pgsql
-#   - DB=sqlite
-#   - DB=mongodb
+  # - DB=mariadb
+  # - DB=pgsql
+  # - DB=sqlite
+  # - DB=mongodb
 
 before_script:
   - composer install --no-plugins
   - sh -c "if [ '$DB' = 'mysql' ] || [ '$DB' = 'mariadb' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS cockpitdb;'; fi"
-#   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS cockpitdb;' -U postgres; fi"
-#   - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cockpitdb;' -U postgres; fi"
-#   - sh -c "if [ '$db' = 'mongodb' ]; then pecl install mongodb; fi"
-#   - sh -c "if [ '$DB' = 'mongodb']; then mongo 'cockpitdb' --eval 'db.createUser({user:\"travis\",pwd:\"test\",roles:[\"readWrite\"]});'; fi"
+  # - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS cockpitdb;' -U postgres; fi"
+  # - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cockpitdb;' -U postgres; fi"
+  # - sh -c "if [ '$db' = 'mongodb' ]; then pecl install mongodb; fi"
+  # - sh -c "if [ '$DB' = 'mongodb']; then mongo 'cockpitdb' --eval 'db.createUser({user:\"travis\",pwd:\"test\",roles:[\"readWrite\"]});'; fi"
 
 # Run PHPUnit with current DB
 script:
-    - vendor/bin/phpunit --configuration tests/travis/$DB.phpunit.xml
+  - vendor/bin/phpunit --configuration tests/travis/$DB.phpunit.xml
