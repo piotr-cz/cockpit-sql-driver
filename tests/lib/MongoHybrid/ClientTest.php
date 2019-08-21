@@ -271,14 +271,14 @@ class ClientTest extends TestCase
             'Failed to find one item via $eq'
         );
 
-        // Following works only on MongoDB driver
+        // Following is supported only by MongoDB driver
         if (static::$storage->type === 'mongodb') {
             // Assert $not operator (regex)
             $items = static::$storage->find($this->mockCollectionId, [
                 'filter' => [
                     // MongoDB Driver
                     'content' => ['$not' => new \MongoDB\BSON\Regex('Lorem ipsum')],
-                    // MySQL Driver
+                    // SQL Driver
                     // 'content' => ['$not' => 'Lorem ipsum'],
                 ]
             ]);
@@ -304,14 +304,15 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Test filter callback (not implemented in MongoDB Driver)
+     * Test filter callback (not supported by MongoDB)
      *
      * @covers \MongoHybrid\Client::find
      */
     public function testFindFilterCallback()
     {
-        // Doesn't work on MongoDB
+        // Skip test on MongoDB Driver
         if (static::$storage->type === 'mongodb') {
+            $this->markTestSkipped('Filter callback is not available in MongoDB');
             return;
         }
 
@@ -767,12 +768,14 @@ class ClientTest extends TestCase
 
         $this->assertTrue($count === 1);
 
-        // Test count with callable filter
-        $count = static::$storage->count($this->mockCollectionId, function (array $doc): bool {
-            return $doc['content'] === 'Lorem ipsum';
-        });
+        // Callable filter (not supported by MongoDB)
+        if (static::$storage->type !== 'mongodb') {
+            $count = static::$storage->count($this->mockCollectionId, function (array $doc): bool {
+                return $doc['content'] === 'Lorem ipsum';
+            });
 
-        $this->assertTrue($count === 1);
+            $this->assertTrue($count === 1);
+        }
     }
 
     /**
