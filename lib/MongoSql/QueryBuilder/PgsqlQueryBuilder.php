@@ -199,7 +199,7 @@ class PgsqlQueryBuilder extends QueryBuilder
 
             -- Add index to _id (Pg 9.5+)
             -- Cannot add index on JSON table in CREATE TABLE statement (expressions not supported)
-            CREATE UNIQUE INDEX IF NOT EXISTS "idx_{$tableName}_id" ON "${tableName}" ((("document" ->> '_id')::text));
+            CREATE UNIQUE INDEX IF NOT EXISTS "idx_{$tableName}_id" ON "{$tableName}" ((("document" ->> '_id')::text));
 SQL;
     }
 
