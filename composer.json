@@ -1,9 +1,9 @@
 {
     "name": "piotr-cz/cockpit-sql-driver",
-    "description": "SQL Driver for Cockpit CMS",
-    "keywords": ["cockpit", "SQL", "MariaDB", "MySQL", "PostgreSQL"],
     "type": "cockpit-module",
-    "homepage": "https://github.com/piotr-cz/cockpit-mongosql",
+    "description": "SQL Driver for Cockpit CMS",
+    "keywords": ["cockpit", "Database driver", "SQL", "MariaDB", "MySQL", "PostgreSQL"],
+    "homepage": "https://github.com/piotr-cz/cockpit-sql-driver",
     "license": "MIT",
     "authors": [
         {
