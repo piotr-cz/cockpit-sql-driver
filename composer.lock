@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99695abc06b03a1194ddd85a633db9c0",
+    "content-hash": "6757f66d2ba06186fe5d458be1ceded7",
     "packages": [
         {
             "name": "composer/installers",
@@ -2206,5 +2206,8 @@
         "ext-pdo": "*",
         "ext-json": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "platform-overrides": {
+        "ext-mongodb": "1.5.0"
+    }
 }
