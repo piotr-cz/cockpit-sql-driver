@@ -19,13 +19,13 @@ php:
 
 # Start provisioned database services
 services:
-  # - mysql
+  - mysql
   # - mongodb
 
 # Available as addons
 addons:
   postgresql: '9.5'
-  mariadb: '10.2'
+  # mariadb: '10.2'
 
 # Create build matrix exporting DB variable
 env:
@@ -48,3 +48,7 @@ before_script:
 # Run PHPUnit with current DB
 script:
   - vendor/bin/phpunit --configuration tests/travis/$DB.phpunit.xml
+
+allow_failures:
+  # - php: 7.4snapshot
+  # - env: DB=sqlite
