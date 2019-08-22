@@ -29,9 +29,9 @@ addons:
 
 # Create build matrix exporting DB variable
 env:
-  # - DB=mysql
+  - DB=mysql
   - DB=pgsql
-  - DB=mariadb
+  # - DB=mariadb
   # - DB=sqlite
   # - DB=mongodb
 
