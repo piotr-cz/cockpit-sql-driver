@@ -22,13 +22,13 @@ services:
 
 # Available as addons
 addons:
-  # posgresql: '9.5'
+  postgresql: '9.5'
   # mariadb: '10.2'
 
 # Create build matrix exporting DB variable
 env:
   - DB=mysql
-  # - DB=pgsql
+  - DB=pgsql
   # - DB=mariadb
   # - DB=sqlite
   # - DB=mongodb
@@ -36,8 +36,8 @@ env:
 before_script:
   - composer install --no-plugins
   - sh -c "if [ '$DB' = 'mysql' ] || [ '$DB' = 'mariadb' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS cockpitdb;'; fi"
-  # - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS cockpitdb;' -U postgres; fi"
-  # - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cockpitdb;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS cockpitdb;' -U postgres; fi"
+  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cockpitdb;' -U postgres; fi"
   # - sh -c "if [ '$db' = 'mongodb' ]; then pecl install mongodb; fi"
   # - sh -c "if [ '$DB' = 'mongodb']; then mongo 'cockpitdb' --eval 'db.createUser({user:\"travis\",pwd:\"test\",roles:[\"readWrite\"]});'; fi"
 
