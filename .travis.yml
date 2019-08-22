@@ -23,13 +23,13 @@ services:
 # Available as addons
 addons:
   postgresql: '9.5'
-  # mariadb: '10.2'
+  mariadb: '10.2'
 
 # Create build matrix exporting DB variable
 env:
   - DB=mysql
   - DB=pgsql
-  # - DB=mariadb
+  - DB=mariadb
   # - DB=sqlite
   # - DB=mongodb
 

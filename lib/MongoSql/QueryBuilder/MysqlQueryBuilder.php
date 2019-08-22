@@ -19,15 +19,12 @@ class MysqlQueryBuilder extends QueryBuilder
      */
     protected function createPathSelector(string $fieldName): string
     {
-        return sprintf("`document` ->> '$.%s'", $fieldName);
-
-        // Workaround for MariaDB Which doesn't use -> and ->> operators
+        // MySQL 5.7.8 & MariaDB 10.2.3
         // {@link https://jira.mariadb.org/browse/MDEV-13594}
-        // return sprintf("JSON_UNQUOTE(JSON_EXTRACT(`document`, '$.%s'))", $fieldName);
+        return sprintf("JSON_UNQUOTE(JSON_EXTRACT(`document`, '$.%s'))", $fieldName);
 
-        // SQLite + JSON1 extension (cannot use PDO, just SQLite3)
-        // {@link https://www.sqlite.org/draft/json1.html}
-        // return sprintf('"document.%s"', $fieldName);
+        // MySQL 5.7.9
+        // return sprintf("`document` ->> '$.%s'", $fieldName);
     }
 
     /**

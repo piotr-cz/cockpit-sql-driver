@@ -11,7 +11,7 @@ use MongoSql\QueryBuilder\MysqlQueryBuilder;
 /**
  * MySQL Driver
  * Requires MySQL 5.7.9+ (JSON support and shorthand operators)
- *          or MariaDB 10.2.3+ (detect by x.y.z-mx.my.mz-MariaDB-x+x in db server version)
+ *          or MariaDB 10.2.3+ (JSON support: 10.2.3, Generated columns: 10.2.6; detect by x.y.z-mx.my.mz-MariaDB-x+x in db server version)
  * TODO: Add MariaDB version check
  */
 class MysqlDriver extends Driver
