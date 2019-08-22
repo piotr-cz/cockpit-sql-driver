@@ -691,14 +691,13 @@ class ClientTest extends TestCase
     }
 
     /**
-     * Test save
+     * Test save (insert)
      *
      * @covers \MongoHybrid\Client::save
      * @covers \MongoHybrid\Client::insert
-     * @covers \MongoHybrid\Client::update
      * @covers \MongoHybrid\Client::count
      */
-    public function testSave(): void
+    public function testSaveInsert(): void
     {
         $item = [
             '_o' => 3,
@@ -713,8 +712,17 @@ class ClientTest extends TestCase
             static::$storage->count($this->mockCollectionId, ['_o' => $item['_o']]) === 1,
             'Insert via Save'
         );
+    }
 
-        // Update
+    /**
+     * Test save (update)
+     *
+     * @covers \MongoHybrid\Client::save
+     * @covers \MongoHybrid\Client::update
+     * @covers \MongoHybrid\Client::count
+     */
+    public function testSaveUpdate(): void
+    {
         $item = [
             '_id' => $this->mockCollectionItems[1]['_id'],
             '_o' => 4,
