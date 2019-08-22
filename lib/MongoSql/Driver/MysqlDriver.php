@@ -47,7 +47,10 @@ class MysqlDriver extends Driver
             ]
         );
 
-        // Set Mysql_mode after connection has started to ISO/IEC 9075
+        /* Set sql_mode after connection has started to ISO/IEC 9075
+         * https://dev.mysql.com/doc/refman/5.7/en/sql-mode.html
+         * https://mariadb.com/kb/en/library/sql-mode/
+         */
         $connection->exec("SET sql_mode = 'ANSI';");
 
         return $connection;

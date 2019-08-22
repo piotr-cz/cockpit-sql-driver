@@ -197,9 +197,10 @@ class MysqlQueryBuilder extends QueryBuilder
             CREATE TABLE IF NOT EXISTS "{$tableName}" (
                 "id"       INT  NOT NULL AUTO_INCREMENT,
                 "document" JSON NOT NULL,
-                -- Add unique index on generated column to _id
-                "_id_virtual"       VARCHAR(24) GENERATED ALWAYS AS ({$this->createPathSelector('_id')}) NOT NULL UNIQUE COMMENT 'Id',
-                PRIMARY KEY ("id")
+                -- Add generated column with unique key
+                "_id_virtual"       VARCHAR(24) GENERATED ALWAYS AS ({$this->createPathSelector('_id')}) UNIQUE COMMENT 'Id',
+                PRIMARY KEY ("id"),
+                CONSTRAINT "_id_virtual_not_null" CHECK ("_id_virtual" IS NOT NULL)
             ) ENGINE=InnoDB COLLATE 'utf8mb4_unicode_ci';
 SQL;
     }
