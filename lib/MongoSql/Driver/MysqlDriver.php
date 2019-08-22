@@ -11,16 +11,16 @@ use MongoSql\QueryBuilder\MysqlQueryBuilder;
 /**
  * MySQL Driver
  * Requires MySQL 5.7.9+ (JSON support and shorthand operators)
- *          or MariaDB 10.2.3+ (JSON support: 10.2.3, Generated columns: 10.2.6; detect by x.y.z-mx.my.mz-MariaDB-x+x in db server version)
- * TODO: Add MariaDB version check
+ *          or MariaDB 10.2.3+ (JSON support: 10.2.3, Generated columns: 10.2.6)
  */
 class MysqlDriver extends Driver
 {
     /** @inheritdoc */
     protected const DB_DRIVER_NAME = 'mysql';
 
-    /** @inheritdoc */
+    /** @var string - Min db server version */
     protected const DB_MIN_SERVER_VERSION = '5.7.9';
+    protected const DB_MIN_SERVER_VERSION_MARIADB = '10.2.6';
 
     /** @inheritdoc */
     protected const QUERYBUILDER_CLASS = MysqlQueryBuilder::class;
@@ -51,5 +51,35 @@ class MysqlDriver extends Driver
         $connection->exec("SET sql_mode = 'ANSI';");
 
         return $connection;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * Version string examples:
+     * - MySQL: `5.7.27-0ubuntu0.18.04.1`
+     * - MariaDB: `5.5.5-10.2.26-MariaDB-1:10.2.26+maria~bionic`
+     */
+    protected function assertIsDbSupported(): void
+    {
+        parent::assertIsDbSupported();
+
+        $currentVersion = $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+        $minVersion = static::DB_MIN_SERVER_VERSION;
+
+        // Remove MariaDBs' MySQL compat prefix
+        // See https://mariadb.atlassian.net/browse/MDEV-4088
+        // Note that query `SELECT VERSION()` won't return MySQL copat prefix
+        if (strpos($currentVersion, '-MariaDB') !== false) {
+            [$mySqlCompatVersion, $mariaDbVersion] = explode('-', $currentVersion, 2);
+
+            $currentVersion = $mariaDbVersion;
+            $minVersion = static::DB_MIN_SERVER_VERSION_MARIADB;
+        }
+
+        static::assertIsDbVersionSupported(
+            $currentVersion,
+            $minVersion
+        );
     }
 }

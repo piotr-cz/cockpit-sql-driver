@@ -17,7 +17,7 @@ class PgsqlDriver extends Driver
     protected const DB_DRIVER_NAME = 'pgsql';
 
     /**
-     * @inheritdoc
+     * Min db server version
      * extended json added in 9.3
      * jsonb added in 9.4
      */
@@ -44,6 +44,20 @@ class PgsqlDriver extends Driver
             null,
             null,
             $driverOptions
+        );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function assertIsDbSupported(): void
+    {
+        parent::assertIsDbSupported();
+
+        // Check version
+        static::assertIsDbVersionSupported(
+            $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION),
+            static::DB_MIN_SERVER_VERSION
         );
     }
 }

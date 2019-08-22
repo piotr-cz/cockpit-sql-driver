@@ -24,13 +24,11 @@ use MongoSql\Contracts\ {
  */
 abstract class Driver implements DriverInterface
 {
+    /** @var string - MongoHybrid server id */
     public const SERVER_NAME = 'sqldriver';
 
     /** @var string - Driver name */
     protected const DB_DRIVER_NAME = null;
-
-    /** @var string - Min database version */
-    protected const DB_MIN_SERVER_VERSION = null;
 
     /** @var string - Query builder FQCN */
     protected const QUERYBUILDER_CLASS = null;
@@ -78,7 +76,7 @@ abstract class Driver implements DriverInterface
 
         $this->queryBuilder = new $queryBuilderFqcn([$this->connection, 'quote']);
 
-        $this->assertIsSupported();
+        $this->assertIsDbSupported();
     }
 
     /**
@@ -86,27 +84,34 @@ abstract class Driver implements DriverInterface
      *
      * @throws \MongoSql\DriverException
      */
-    protected function assertIsSupported(): void
+    protected function assertIsDbSupported(): void
     {
         $pdoDriverName = $this->connection->getAttribute(PDO::ATTR_DRIVER_NAME);
-        // $pdoDriverName = static::DB_DRIVER_NAME;
+        // Note: may also use static::DB_DRIVER_NAME;
 
         // Check for PDO Driver
         if (!in_array($pdoDriverName, PDO::getAvailableDrivers())) {
             throw new DriverException(sprintf('PDO extension for %s driver not loaded', $pdoDriverName));
         }
 
-        // Check version
-        $currentVersion = $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+        return;
+    }
 
-        if (!version_compare($currentVersion, static::DB_MIN_SERVER_VERSION, '>=')) {
+    /**
+     * Assert min database server version requirement
+     *
+     * @param string $currentVersion
+     * @param string $minVersion
+     * @throws \MongoSql\DriverException
+     */
+    protected static function assertIsDbVersionSupported(string $currentVersion, string $minVersion): void
+    {
+        if (!version_compare($currentVersion, $minVersion, '>=')) {
             throw new DriverException(vsprintf('Driver requires database server version >= %s, got %s', [
-                static::DB_MIN_SERVER_VERSION,
+                $minVersion,
                 $currentVersion
             ]));
         }
-
-        return;
     }
 
     /**
