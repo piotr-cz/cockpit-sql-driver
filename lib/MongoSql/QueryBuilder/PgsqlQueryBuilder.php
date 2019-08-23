@@ -20,9 +20,9 @@ class PgsqlQueryBuilder extends QueryBuilder
      */
     public function createPathSelector(string $fieldName, bool $asText = true): string
     {
-        return vsprintf('"document" %s \'{%s}\'', [
+        return vsprintf('"document" %s %s', [
             $asText ? '#>>' : '#>',
-            str_replace('.', ',', $fieldName)
+            $this->qv('{' . str_replace('.', ',', $fieldName) . '}')
         ]);
     }
 
@@ -179,7 +179,7 @@ class PgsqlQueryBuilder extends QueryBuilder
      */
     public function buildTableExists(string $tableName): string
     {
-        return sprintf("SELECT to_regclass('%s')", $tableName);
+        return sprintf("SELECT to_regclass(%s)", $this->qv($tableName));
     }
 
     /**
@@ -189,7 +189,7 @@ class PgsqlQueryBuilder extends QueryBuilder
     {
         return <<<SQL
 
-            CREATE TABLE IF NOT EXISTS "{$tableName}" (
+            CREATE TABLE IF NOT EXISTS {$this->qi($tableName)} (
                 "id"       serial NOT NULL,
                 "document" jsonb  NOT NULL,
                 -- Generated columns requires PostgreSQL 12+
@@ -199,7 +199,7 @@ class PgsqlQueryBuilder extends QueryBuilder
 
             -- Add index to _id (Pg 9.5+)
             -- Cannot add index on JSON table in CREATE TABLE statement (expressions not supported)
-            CREATE UNIQUE INDEX IF NOT EXISTS "idx_{$tableName}_id" ON "{$tableName}" ((("document" ->> '_id')::text));
+            CREATE UNIQUE INDEX IF NOT EXISTS {$this->qi('idx_' . $tableName . '_id')} ON {$this->qi($tableName)} ((("document" ->> '_id')::text));
 SQL;
     }
 

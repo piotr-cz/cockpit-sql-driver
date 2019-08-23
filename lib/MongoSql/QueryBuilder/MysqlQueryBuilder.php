@@ -21,10 +21,10 @@ class MysqlQueryBuilder extends QueryBuilder
     {
         // MySQL 5.7.8 & MariaDB 10.2.3
         // {@link https://jira.mariadb.org/browse/MDEV-13594}
-        return sprintf("JSON_UNQUOTE(JSON_EXTRACT(`document`, '$.%s'))", $fieldName);
+        return sprintf('JSON_UNQUOTE(JSON_EXTRACT(`document`, %s))', $this->qv('$.' . $fieldName));
 
         // MySQL 5.7.9
-        // return sprintf("`document` ->> '$.%s'", $fieldName);
+        // return sprintf('`document` ->> %s', $this->qv('$.' . $fieldName));
     }
 
     /**
@@ -194,7 +194,7 @@ class MysqlQueryBuilder extends QueryBuilder
     public function buildCreateTable(string $tableName): string
     {
         return <<<SQL
-            CREATE TABLE IF NOT EXISTS "{$tableName}" (
+            CREATE TABLE IF NOT EXISTS {$this->qi($tableName)} (
                 "id"       INT  NOT NULL AUTO_INCREMENT,
                 "document" JSON NOT NULL,
                 -- Add generated column with unique key

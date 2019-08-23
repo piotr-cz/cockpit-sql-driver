@@ -103,7 +103,7 @@ class Collection implements CollectionInterface
             <<<SQL
 
                 INSERT INTO
-                    "{$this->collectionName}" ("document")
+                    {$this->queryBuilder->qi($this->collectionName)} ("document")
 
                 VALUES (
                     :data
@@ -136,7 +136,7 @@ SQL
             <<<SQL
 
                 UPDATE
-                    "{$this->collectionName}"
+                    {$this->queryBuilder->qi($this->collectionName)}
 
                 SET
                     "document" = :data
@@ -188,7 +188,7 @@ SQL
             <<<SQL
 
                 UPDATE
-                    "{$this->collectionName}"
+                    {$this->queryBuilder->qi($this->collectionName)}
 
                 SET
                     "document" = :data
@@ -213,7 +213,7 @@ SQL
             <<<SQL
 
                 DELETE FROM
-                    "{$this->collectionName}"
+                    {$this->queryBuilder->qi($this->collectionName)}
 
                 {$this->queryBuilder->buildWhere($filter)}
 SQL
@@ -242,7 +242,7 @@ SQL
                     COUNT("document")
 
                 FROM
-                    "{$this->collectionName}"
+                    {$this->queryBuilder->qi($this->collectionName)}
 
                 {$this->queryBuilder->buildWhere($filter)}
 SQL
@@ -262,7 +262,7 @@ SQL
             <<<SQL
 
                 DROP TABLE IF EXISTS
-                    "{$this->collectionName}"
+                    {$this->queryBuilder->qi($this->collectionName)}
 SQL
         );
 

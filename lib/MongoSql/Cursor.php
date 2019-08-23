@@ -98,7 +98,7 @@ class Cursor implements IteratorAggregate, CursorInterface
                 "document"
 
             FROM
-                "{$this->collectionName}"
+                {$this->queryBuilder->qi($this->collectionName)}
 
             {$sqlWhere}
             {$sqlOrderBy}
