@@ -48,6 +48,7 @@ before_script:
 # Run PHPUnit with current DB
 script:
   - vendor/bin/phpunit --configuration tests/travis/$DB.phpunit.xml
+  # - vendor/bin/phpc-cs-fixer fix -v --diff --dry-run
 
 allow_failures:
   # - php: 7.4snapshot

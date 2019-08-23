@@ -22,5 +22,5 @@ indent_size = 4
 indent_size = 4
 
 # Other JSON configs
-[{composer.json}]
+[composer.json]
 indent_size = 4

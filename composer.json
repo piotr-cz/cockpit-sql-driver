@@ -20,7 +20,8 @@
     },
     "require-dev": {
         "aheinze/cockpit": "^0.9",
-        "phpunit/phpunit": "^7.5"
+        "phpunit/phpunit": "^7.5",
+        "friendsofphp/php-cs-fixer": "^2.15"
     },
     "suggest": {
         "aheinze/cockpit": "Please install Cockpit before installing this addon",
@@ -47,7 +48,12 @@
         "installer-name": "SqlDriver"
     },
     "scripts": {
+        "test": [
+            "@test:phpcs",
+            "@test:phpunit"
+        ],
         "test:phpunit": "phpunit",
-        "phpcs:fix": "php-cs-fixer fix"
+        "test:phpcs": "phpc-cs-fixer fix -vv --diff --dry-run",
+        "phpcs-fix": "php-cs-fixer fix -vv --diff"
     }
 }
