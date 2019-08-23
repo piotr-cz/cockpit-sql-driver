@@ -54,9 +54,10 @@ interface DriverInterface
      *
      * @param string $collectionId - Full collection id
      * @param array &$doc
+     * @param bool $isCreate - true to replace document, false to update
      * @return bool
      */
-    public function save(string $collectionId, array &$doc): bool;
+    public function save(string $collectionId, array &$doc, bool $isCreate = false): bool;
 
     /**
      * Remove documents from collection
@@ -125,6 +126,7 @@ interface DriverInterface
 
     /**
      * Remove field from collection documents
+     * @since https://github.com/agentejo/cockpit/commit/504bc559af08b8e22c5dc5c15ef27bf13192ed42
      *
      * @param string $collectionId
      * @param string $field
@@ -133,6 +135,7 @@ interface DriverInterface
 
     /**
      * Rename field in collection documents
+     * @since https://github.com/agentejo/cockpit/commit/76f90543074705d941df48e9b1d3ffec3873c30a
      *
      * @param string $collectionId
      * @param string $field

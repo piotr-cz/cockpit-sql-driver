@@ -117,13 +117,73 @@ SQL
     }
 
     /**
-     * Update documents
+     * Update documents by merging with it's data
+     *
+     * Ideally should use one query to update all rows with:
+     * MySQL & MariaDB (10.2.25/ 10.3.15/ 10.4.5) only:
+     *   `SET "document" = JSON_MERGE_PATCH("document", :data)`
+     * PostgreSQL 9.5+ only:
+     *   `SET "document" = "document" || :data::jsonb`
+     *
+     * @param array|callable $filter
+     * @param array $update Data to apply to the matched documents
+     * @param array $options
+     * @return bool
+     */
+    public function updateMany($filter, array $update, array $options = []): bool
+    {
+        $stmt = $this->connection->prepare(
+            <<<SQL
+
+                UPDATE
+                    "{$this->collectionName}"
+
+                SET
+                    "document" = :data
+
+                WHERE
+                    {$this->queryBuilder->createPathSelector('_id')} = :_id
+SQL
+        );
+
+        /* Note: Cannot use Traversable as MySQL client doesn't allow running more than one query at a time
+         *       (General error: 2014 Cannot execute queries while other unbuffered queries are active.)
+         *       Alternatively coud set PDO:MYSQL_ATTR_USE_BUFFERED_QUERY => true
+         *       see https://stackoverflow.com/a/17582620/1012616
+         */
+        foreach ($this->find($filter, $options)->toArray() as $item) {
+            $stmt->execute([
+                ':_id' => $item['_id'],
+                ':data' => QueryBuilder::jsonEncode(array_merge($item, $update)),
+            ]);
+        }
+
+        return true;
+    }
+
+    /**
+     * Update document by merging with it's data
+     *
+     * @param array|callable $filter
+     * @param array $update
+     * @return bool
+     */
+    public function updateOne($filter, array $update): bool
+    {
+        return $this->updateMany($filter, $update, [
+            'limit' => 1
+        ]);
+    }
+
+    /**
+     * Replace document
      *
      * @param array $filter
-     * @param array $data Update to apply to the matched documents
+     * @param array $update Data to replace to the matched documents
      */
-    public function updateMany(array $filter = [], array $update): bool
+    public function replaceMany(array $filter, array $replace): bool
     {
+        // Note: UPDATE .. LIMIT Won't work for PostgreSQL
         $stmt = $this->connection->prepare(
             <<<SQL
 
@@ -137,7 +197,7 @@ SQL
 SQL
         );
 
-        $stmt->execute([':data'  => QueryBuilder::jsonEncode($update)]);
+        $stmt->execute([':data'  => QueryBuilder::jsonEncode($replace)]);
 
         return true;
     }

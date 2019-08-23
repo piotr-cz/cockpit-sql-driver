@@ -17,7 +17,7 @@ class MysqlQueryBuilder extends QueryBuilder
     /**
      * @inheritdoc
      */
-    protected function createPathSelector(string $fieldName): string
+    public function createPathSelector(string $fieldName): string
     {
         // MySQL 5.7.8 & MariaDB 10.2.3
         // {@link https://jira.mariadb.org/browse/MDEV-13594}

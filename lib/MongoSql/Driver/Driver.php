@@ -198,7 +198,13 @@ abstract class Driver implements DriverInterface
             return $this->insert($collectionId, $doc);
         }
 
-        return $this->update($collectionId, ['_id' => $doc['_id']], $doc);
+        $filter = ['_id' => $doc['_id']];
+
+        if ($isCreate) {
+            return $this->getCollection($collectionId)->replaceMany($filter, $doc);
+        }
+
+        return $this->getCollection($collectionId)->updateOne($filter, $doc);
     }
 
     /**
@@ -247,7 +253,7 @@ abstract class Driver implements DriverInterface
 
             unset($doc[$field]);
 
-            $this->update($collectionId, ['_id' => $doc['_id']], $doc, false);
+            $this->save($collectionId, $doc, true);
         }
 
         return;
@@ -269,7 +275,7 @@ abstract class Driver implements DriverInterface
 
             unset($doc[$field]);
 
-            $this->update($collectionId, ['_id' => $doc['_id']], $doc, false);
+            $this->save($collectionId, $doc, true);
         }
 
         return;

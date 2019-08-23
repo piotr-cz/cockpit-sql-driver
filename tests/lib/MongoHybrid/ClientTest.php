@@ -732,9 +732,23 @@ class ClientTest extends TestCase
 
         static::$storage->save($this->mockCollectionId, $item);
 
+        // Lookup item by _o
+        $foundItem = static::$storage->findOne($this->mockCollectionId, ['_o' => $item['_o']]);
+
         $this->assertTrue(
-            static::$storage->count($this->mockCollectionId, ['_o' => $item['_o']]) === 1,
+            $foundItem !== null,
             'Update via Save'
+        );
+
+        // ID matches
+        $this->assertTrue(
+            $foundItem['_id'] == $item['_id'],
+            'Id matches'
+        );
+
+        $this->assertTrue(
+            array_key_exists('content', $foundItem),
+            'Properties preserved after update'
         );
     }
 
@@ -791,9 +805,13 @@ class ClientTest extends TestCase
      *
      * @covers \MongoHybridClient::removeField
      */
-    /*
     public function testRemoveField()
     {
+        if (!static::$storage->driverHasMethod('renameField')) {
+            $this->markTestSkipped('Driver::renameField method not implemented');
+            return;
+        }
+
         static::$storage->removeField($this->mockCollectionId, 'content');
 
         $items = static::$storage->find($this->mockCollectionId);
@@ -802,16 +820,19 @@ class ClientTest extends TestCase
             !in_array('content', array_keys($items[0]))
         );
     }
-    */
 
     /**
      * Test rename field (cockpit > v0.9.2)
      *
      * @covers \MongoHybridClient::renameField
      */
-    /*
     public function testRenameField()
     {
+        if (!static::$storage->driverHasMethod('removeField')) {
+            $this->markTestSkipped('Driver::removeField method not implemented');
+            return;
+        }
+
         static::$storage->renameField($this->mockCollectionId, 'content', 'bio');
 
         $items = static::$storage->find($this->mockCollectionId);
@@ -824,7 +845,6 @@ class ClientTest extends TestCase
             in_array('bio', array_keys($items[0]))
         );
     }
-    */
 
     /**
      * @inheritdoc

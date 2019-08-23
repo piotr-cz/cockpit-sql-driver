@@ -51,4 +51,16 @@ class MongoHybridClientWrapper extends MongoHybridClient
     {
         return $this->driver instanceof $className;
     }
+
+    /**
+     * Check if driver has method
+     * useful for feature checking
+     *
+     * @param string $methodName
+     * @return bool
+     */
+    public function driverHasMethod(string $methodName): bool
+    {
+        return method_exists($this->driver, $methodName);
+    }
 }

@@ -41,7 +41,7 @@ abstract class QueryBuilder
      * @param string $fieldName
      * @return string
      */
-    abstract protected function createPathSelector(string $fieldName): string;
+    abstract public function createPathSelector(string $fieldName): string;
 
     /**
      * Build ORDER BY subquery
@@ -119,7 +119,7 @@ abstract class QueryBuilder
      * @param string $concat
      * @return string|null
      */
-    public function buildWhereSegments(array $criteria, string $concat = self::GLUE_OPERATOR_AND): ?string
+    protected function buildWhereSegments(array $criteria, string $concat = self::GLUE_OPERATOR_AND): ?string
     {
         $whereSegments = [];
 
