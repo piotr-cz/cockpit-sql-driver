@@ -41,6 +41,7 @@
     },
     "config": {
         "platform": {
+            "php": "7.1.30",
             "ext-mongodb": "1.5.0"
         }
     },
