@@ -1,11 +1,15 @@
-# SQL Driver for Cockpit CMS (next & legacy)
+# SQL Driver for Cockpit CMS
+
+[![Build Status](https://travis-ci.org/piotr-cz/cockpit-sql-driver.svg?branch=master)](https://travis-ci.org/piotr-cz/cockpit-sql-driver)
+[![Latest Stable Version](https://poser.pugx.org/piotr-cz/cockpit-sql-driver/v/stable.svg)](https://packagist.org/packages/piotr-cz/cockpit-sql-driver)
 
 This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default Mongo/ SQLite.
 
 
 ## Requirements
-- Cockpit
-- MySQL 5.7.9/ MariaDB 10.2.3/ PostgreSQL 9.4
+
+- Cockpit CMS (next or legacy)
+- MySQL 5.7.9/ MariaDB 10.2.6/ PostgreSQL 9.4
 - PHP 7.1
 - PHP extensions: *pdo*, *pdo_mysql*/ *pdo_pgsql*
 
@@ -18,10 +22,9 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/releases/latest) and place in under `cockpit/addons/SqlDriver` directory
 
 
-### Using composer
+### Using Composer
 
 1. Make sure path to cockpit addons are defined in composer.json
-
    ```json
    {
        "name": "my-project",
@@ -33,7 +36,7 @@ Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/release
    }
    ```
 
-2. Install addon using composer
+2. Run
    ```sh
    composer require piotr-cz/cockpit-sql-driver
    ```
@@ -70,25 +73,24 @@ return [
 ];
 ```
 
-
-Rererence: Cockpit docs > [Configuration](https://getcockpit.com/documentation/reference/configuration)
+_Rererence: Cockpit docs > [Configuration](https://getcockpit.com/documentation/reference/configuration)_
 
 
 ## Database data migration (Cockpit v0.6.0+)
 
-1. Export data to `/migration` dir
+1. Export data to `/migration` subdirectory
    ``` sh
    ./cp export --target migration
    ```
 
 2. Switch database to _sqldriver_ (see [Configuration](#configuration))
 
-3. Import data from `/migration` dir
+3. Import data from `/migration` subdirectory
    ```sh
    ./cp import --src migration
    ```
 
-Reference: Cockpit docs > [CLI](https://getcockpit.com/documentation/reference/CLI)
+_Reference: Cockpit docs > [CLI](https://getcockpit.com/documentation/reference/CLI)_
 
 
 ## Testing
@@ -96,11 +98,12 @@ Reference: Cockpit docs > [CLI](https://getcockpit.com/documentation/reference/C
 There are integration tests included in the package.
 These require Cockpit CMS as a dev dependency and use it's _MongoHybrid Client_ API to run actions on database
 
-1. Install dependencies [with --no-plugins](https://github.com/composer/installers/issues/430)
+1. Install dependencies
    ```sh
    cd cockpit/addons/SqlDriver
    composer install --no-plugins
    ```
+   _option `--no-plugins` due to [this issue](https://github.com/composer/installers/issues/430)_
 
 2. Configure test database: copy [`/phpunit.xml.dist`](./phpunit.xml.dist) to `/phpunit.xml` and set up variables as in [configuration](#configuration)
 
@@ -112,15 +115,18 @@ These require Cockpit CMS as a dev dependency and use it's _MongoHybrid Client_ 
 
 ## Drawbacks
 
-Cockpit doesn't provide public API to register custom databse drivers so this module monkey-patches Cockpit Driver selector client (_MongoHybrid Client_).
+Cockpit doesn't provide public API to register custom databse drivers so this addon monkey-patches Cockpit Driver selector client (_MongoHybrid Client_).
 This means that there is no guarantee that this addon will work in future versions of Cockpit.
+
 
 ### Collection filters
 
 #### Not implemented
 
 - `$func`/ `$fn`/ `$f`
+
 - `$fuzzy`
+
 
 #### Works differently
 
@@ -156,8 +162,8 @@ If you would like to speed up filters on other collection fields add virtual col
 
   ```sql
   ALTER TABLE
-      `{$tableName}` ADD COLUMN `{$docColumnName}_virtual` INT AS (`document` ->> '$.{$docColumnName}') NOT NULL,
-      ADD UNIQUE | KEY `idx_{$tableName}_{$docColumnName}` (`{$docColumnName}_virtual`);
+      `{$tableName}` ADD COLUMN `{$fieldName}_virtual` INT AS (`document` ->> '$.{$fieldName}') NOT NULL,
+      ADD UNIQUE | KEY `idx_{$tableName}_{$fieldName}` (`{$fieldName}_virtual`);
   ```
 
   _Reference: MySQL 5.7 > [CREATE INDEX](https://dev.mysql.com/doc/refman/5.7/en/create-index.html)_
@@ -165,7 +171,7 @@ If you would like to speed up filters on other collection fields add virtual col
 - PosgreSQL:
 
   ```sql
-  CREATE [UNIQUE] INDEX "idx_{$tableName}_{$columnName}" ON "{$tableName}" ((("document" ->> '{$docColumnName}')::int));
+  CREATE [UNIQUE] INDEX "idx_{$tableName}_{$fieldName}" ON "{$tableName}" ((("document" ->> '{$fieldName}')::int));
   ```
 
   _Reference: PostgreSQL 9.4 > [CREATE INDEX](https://www.postgresql.org/docs/9.4/sql-createindex.html)_

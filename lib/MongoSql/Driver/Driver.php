@@ -61,8 +61,11 @@ abstract class Driver implements DriverInterface
         // Using + to keep keys
         // See https://www.php.net/manual/en/pdo.setattribute.php
         $driverOptions = $driverOptions + [
+            // Throw exceptions on errors
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            // Set default fetch mode
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_COLUMN,
+            // Use prepares to avoid parsing query selectors as placeholders
             PDO::ATTR_EMULATE_PREPARES => true,
         ];
 

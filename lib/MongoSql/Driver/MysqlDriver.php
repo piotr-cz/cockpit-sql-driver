@@ -41,8 +41,9 @@ class MysqlDriver extends Driver
             $options['username'],
             $options['password'],
             $driverOptions + [
-                // Note: Setting sql_mode doesn't work in init command, at least in 5.7.26
-                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4;',
+                // Set UTF-8 as character set and collation (Note: Setting sql_mode doesn't work in init command, at least in 5.7.26)
+                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci;',
+                // Use unbuffered query to get results one by one
                 PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
             ]
         );
