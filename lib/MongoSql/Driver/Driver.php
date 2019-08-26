@@ -204,7 +204,7 @@ abstract class Driver implements DriverInterface
         $filter = ['_id' => $doc['_id']];
 
         if ($isCreate) {
-            return $this->getCollection($collectionId)->replaceMany($filter, $doc);
+            return $this->getCollection($collectionId)->replaceOne($filter, $doc);
         }
 
         return $this->getCollection($collectionId)->updateOne($filter, $doc);

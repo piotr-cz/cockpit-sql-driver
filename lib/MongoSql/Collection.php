@@ -69,7 +69,7 @@ class Collection implements CollectionInterface
      * in favor of
      * `$collection->find([], ['limit' => 1])`
      */
-    public function find($filter = [], $options = []): CursorInterface
+    public function find($filter = [], array $options = []): CursorInterface
     {
         return new Cursor($this->connection, $this->queryBuilder, $this->collectionName, $filter, $options);
     }
@@ -80,7 +80,7 @@ class Collection implements CollectionInterface
      * @param array|callable
      * @return array|null
      */
-    public function findOne($filter = [], $options = []): ?array
+    public function findOne($filter = [], array $options = []): ?array
     {
         $results = $this->find($filter, array_merge($options, [
             'limit' => 1
@@ -181,7 +181,7 @@ SQL
      * @param array $filter
      * @param array $update Data to replace to the matched documents
      */
-    public function replaceMany(array $filter, array $replace): bool
+    public function replaceOne(array $filter, array $replace): bool
     {
         // Note: UPDATE .. LIMIT Won't work for PostgreSQL
         $stmt = $this->connection->prepare(
@@ -226,9 +226,11 @@ SQL
 
     /**
      * Count documents
-     * @deprecated in MongoDb 1.4 in favor of countDocuments
+     *
+     * @param array|callable $filter
+     * @return int
      */
-    public function count($filter = []): int
+    public function countDocuments($filter = []): int
     {
         // On user defined function must use find to evaluate each item
         if (is_callable($filter)) {
@@ -251,6 +253,17 @@ SQL
         $stmt->execute();
 
         return (int) $stmt->fetchColumn();
+    }
+
+    /**
+     * Count documents
+     * @deprecated in MongoDb 1.4 in favor of countDocuments
+     */
+    public function count(...$args): int
+    {
+        // trigger_error('Collection::count is deprecated. Use Collection::countDocuments instead', E_DEPRECATED);
+
+        return $this->countDocuments(...$args);
     }
 
     /**
