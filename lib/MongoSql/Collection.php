@@ -48,6 +48,30 @@ class Collection implements CollectionInterface
     }
 
     /**
+     * Create factory callable which takes on only $collectionName parameter
+     *
+     * @param \PDO
+     * @param \MongoSql\QueryBuilder\QueryBuilder $queryBuilder
+     * @param callable [$handleCollectionDrop]
+     *
+     * @return callable
+     */
+    public static function factory(
+        PDO $connection,
+        QueryBuilder $queryBuilder,
+        callable $handleCollectionDrop = null
+    ): callable {
+        return function (string $collectionName) use ($connection, $queryBuilder, $handleCollectionDrop): self {
+            return new static(
+                $connection,
+                $queryBuilder,
+                $collectionName,
+                $handleCollectionDrop
+            );
+        };
+    }
+
+    /**
      * Return collection namespace
      */
     public function __toString(): string
