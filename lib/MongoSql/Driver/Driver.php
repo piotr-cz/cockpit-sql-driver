@@ -83,6 +83,14 @@ abstract class Driver implements DriverInterface
     }
 
     /**
+     * Close connection
+     */
+    public function __destruct()
+    {
+        $this->connection = null;
+    }
+
+    /**
      * Assert features are supported by database
      *
      * @throws \MongoSql\DriverException
