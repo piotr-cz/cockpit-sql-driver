@@ -135,7 +135,12 @@ abstract class Driver implements DriverInterface
             : $name;
 
         if (!isset($this->collections[$collectionId])) {
-            $this->collections[$collectionId] = new Collection($collectionId, $this->connection, $this->queryBuilder, $this);
+            $this->collections[$collectionId] = new Collection(
+                $this->connection,
+                $this->queryBuilder,
+                $collectionId,
+                [$this, 'handleCollectionDrop']
+            );
         }
 
         return $this->collections[$collectionId];

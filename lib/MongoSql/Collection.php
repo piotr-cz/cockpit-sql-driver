@@ -10,7 +10,6 @@ use MongoSql\Contracts\ {
     CursorInterface
 };
 
-use MongoSql\Driver\Driver;
 use MongoSql\QueryBuilder\QueryBuilder;
 
 /**
@@ -19,27 +18,31 @@ use MongoSql\QueryBuilder\QueryBuilder;
  */
 class Collection implements CollectionInterface
 {
-    /** @var string Collection name */
-    protected $collectionName;
-
     /** @var \PDO */
     protected $connection;
 
     /** @var \MongoSql\QueryBuilder\QueryBuilder */
     protected $queryBuilder;
 
-    /** @var \MongoSql\Driver\Driver - Database driver */
-    protected $driver;
+    /** @var string Collection name */
+    protected $collectionName;
+
+    /** @var callable|null */
+    protected $handleCollectionDrop;
 
     /**
      * Constructor
      */
-    public function __construct(string $collectionName, PDO $connection, QueryBuilder $queryBuilder, Driver $driver)
-    {
-        $this->collectionName = $collectionName;
+    public function __construct(
+        PDO $connection,
+        QueryBuilder $queryBuilder,
+        string $collectionName,
+        callable $handleCollectionDrop = null
+    ) {
         $this->connection = $connection;
         $this->queryBuilder = $queryBuilder;
-        $this->driver = $driver;
+        $this->collectionName = $collectionName;
+        $this->handleCollectionDrop = $handleCollectionDrop;
 
         $this->createIfNotExists();
     }
@@ -281,7 +284,9 @@ SQL
 
         $stmt->execute();
 
-        $this->driver->handleCollectionDrop($this->collectionName);
+        if ($this->handleCollectionDrop) {
+            ($this->handleCollectionDrop)($this->collectionName);
+        }
 
         return true;
     }
