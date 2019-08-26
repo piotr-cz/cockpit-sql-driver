@@ -259,11 +259,11 @@ SQL
      * Count documents
      * @deprecated in MongoDb 1.4 in favor of countDocuments
      */
-    public function count(...$args): int
+    public function count($filter = []): int
     {
         // trigger_error('Collection::count is deprecated. Use Collection::countDocuments instead', E_DEPRECATED);
 
-        return $this->countDocuments(...$args);
+        return $this->countDocuments($filter);
     }
 
     /**
