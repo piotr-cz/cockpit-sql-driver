@@ -19,6 +19,8 @@ use MongoSql\Contracts\ {
     DriverInterface
 };
 
+use MongoSql\QueryBuilder\QueryBuilder;
+
 /**
  * Driver factory
  */
@@ -29,9 +31,6 @@ abstract class Driver implements DriverInterface
 
     /** @var string - Driver name */
     protected const DB_DRIVER_NAME = null;
-
-    /** @var string - Query builder FQCN */
-    protected const QUERYBUILDER_CLASS = null;
 
     /** @type \PDO - Database connection */
     protected $connection;
@@ -75,9 +74,7 @@ abstract class Driver implements DriverInterface
             throw new DriverException(sprintf('PDO connection failed: %s', $pdoException->getMessage()), 0, $pdoException);
         }
 
-        $queryBuilderFqcn = static::QUERYBUILDER_CLASS;
-
-        $this->queryBuilder = new $queryBuilderFqcn([$this->connection, 'quote']);
+        $this->queryBuilder = QueryBuilder::createFromPdo($this->connection);
 
         $this->assertIsDbSupported();
     }

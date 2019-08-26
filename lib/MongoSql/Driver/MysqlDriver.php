@@ -6,7 +6,6 @@ namespace MongoSql\Driver;
 use PDO;
 
 use MongoSql\Driver\Driver;
-use MongoSql\QueryBuilder\MysqlQueryBuilder;
 
 /**
  * MySQL Driver
@@ -21,9 +20,6 @@ class MysqlDriver extends Driver
     /** @var string - Min db server version */
     protected const DB_MIN_SERVER_VERSION = '5.7.9';
     protected const DB_MIN_SERVER_VERSION_MARIADB = '10.2.6';
-
-    /** @inheritdoc */
-    protected const QUERYBUILDER_CLASS = MysqlQueryBuilder::class;
 
     /**
      * @inheritdoc

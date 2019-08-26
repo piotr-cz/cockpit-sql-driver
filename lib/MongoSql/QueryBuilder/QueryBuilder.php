@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace MongoSql\QueryBuilder;
 
+use PDO;
+
 /**
  * See \MongoLite\Database\UtilArrayQuery
  */
@@ -32,6 +34,26 @@ abstract class QueryBuilder
     public function __construct(callable $connectionQuote)
     {
         $this->connectionQuote = $connectionQuote;
+    }
+
+    /**
+     * Create query builder from connection
+     */
+    public static function createFromPdo(PDO $connection): self
+    {
+        $pdoDriverName = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+
+        // Get driver name
+        $pdoDriverName = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+
+        // Reslve FQCN
+        $fqcn = sprintf('%s\\%sQueryBuilder', __NAMESPACE__, ucfirst($pdoDriverName));
+
+        if (!class_exists($fqcn)) {
+            throw new \RuntimeException('Cannot initialize query builder for %s driver', $pdoDriverName);
+        }
+
+        return new $fqcn([$connection, 'quote']);
     }
 
     /**
