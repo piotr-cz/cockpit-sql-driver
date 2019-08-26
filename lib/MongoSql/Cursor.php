@@ -8,8 +8,8 @@ use PDOException;
 
 use Traversable;
 use IteratorAggregate;
+use Generator;
 
-use IteratorIterator;
 use CallbackFilterIterator;
 use LimitIterator;
 
@@ -128,7 +128,7 @@ SQL;
             );
         }
 
-        $it = new MapIterator($stmt, [QueryBuilder::class, 'jsonDecode']);
+        $it = mapIterator($stmt, [QueryBuilder::class, 'jsonDecode']);
 
         if (is_callable($this->filter)) {
             $it = new CallbackFilterIterator($it, $this->filter);
@@ -138,7 +138,7 @@ SQL;
 
         $projection = static::compileProjection($this->options['projection']);
 
-        return new MapIterator($it, [static::class, 'applyDocumentProjection'], $projection);
+        return mapIterator($it, [static::class, 'applyDocumentProjection'], $projection);
     }
 
     /**
@@ -201,34 +201,8 @@ SQL;
 /**
  * Apply callback to every element
  */
-class MapIterator extends IteratorIterator implements Traversable
-{
-    /** @var callable */
-    protected $callback;
-
-    /** @var array - Callable arguments */
-    protected $args = [];
-
-    /**
-     * Constructor
-     *
-     * @param \Traversable $iterator
-     * @param callable $callback
-     * @param mixed ...$args
-     */
-    public function __construct(Traversable $iterator, callable $callback, ...$args)
-    {
-        parent::__construct($iterator);
-
-        $this->callback = $callback;
-        $this->args = $args;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function current()
-    {
-        return ($this->callback)(parent::current(), ...$this->args);
+function mapIterator(iterable $iterable, callable $function, ...$args): Generator {
+    foreach ($iterable as $key => $value) {
+        yield $key => $function($value, ...$args);
     }
 }
