@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace MongoSql\Contracts;
+namespace MongoHybrid\Contracts;
+
+use MongoHybrid\Contracts\CollectionInterface;
 
 use MongoHybrid\ResultSet;
-
-use MongoSql\Contracts\CollectionInterface;
 
 /**
  * Driver Interface used by MongoHybrid\Client

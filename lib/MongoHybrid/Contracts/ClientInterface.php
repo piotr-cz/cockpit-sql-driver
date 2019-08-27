@@ -1,4 +1,7 @@
 <?php
+
+namespace MongoHybrid\Contracts;
+
 interface ClientInterface
 {
     public function __construct(string $server, array $options = [], array $driverOptions = []): ClientInterface;

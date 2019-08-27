@@ -5,7 +5,7 @@ namespace MongoSql;
 
 use PDO;
 
-use MongoSql\Contracts\ {
+use MongoHybrid\Contracts\ {
     CollectionInterface,
     CursorInterface
 };

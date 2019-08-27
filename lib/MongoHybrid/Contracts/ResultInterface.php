@@ -1,12 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace MongoSql\Contracts;
+namespace MongoHybrid\Contracts;
+
+use Traversable;
 
 /**
  * Results from Collection::find
  */
-interface ResultInterface extends \Traversable
+interface ResultInterface extends Traversable
 {
     /**
      * Populate each document with related one from given collections

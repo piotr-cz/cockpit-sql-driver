@@ -7,7 +7,7 @@ use InvalidArgumentException;
 
 use PHPUnit\Framework\TestCase;
 
-use MongoHybridClientWrapper;
+use MongoHybrid\ClientWrapper as MongoHybridClientWrapper;
 use MongoSql\Driver\Driver;
 
 /**

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace MongoSql\Contracts;
+namespace MongoHybrid\Contracts;
 
 interface CollectionInterface
 {

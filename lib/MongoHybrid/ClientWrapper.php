@@ -1,4 +1,6 @@
 <?php
+namespace MongoHybrid;
+
 use MongoHybrid\Client as MongoHybridClient;
 
 use MongoSql\Driver\Driver;
@@ -7,7 +9,7 @@ use MongoSql\DriverException;
 /**
  * Monkey patched MongoHybrid client
  */
-class MongoHybridClientWrapper extends MongoHybridClient
+class ClientWrapper extends MongoHybridClient
 {
     /**
      * @inheritdoc

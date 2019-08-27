@@ -13,8 +13,9 @@ use Generator;
 use CallbackFilterIterator;
 use LimitIterator;
 
+use MongoHybrid\Contracts\CursorInterface;
+
 use MongoSql\DriverException;
-use MongoSql\Contracts\CursorInterface;
 use MongoSql\QueryBuilder\QueryBuilder;
 
 /**

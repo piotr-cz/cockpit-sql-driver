@@ -6,7 +6,7 @@ namespace MongoSql;
 use Traversable;
 use IteratorIterator;
 
-use MongoSql\Contracts\ {
+use MongoHybrid\Contracts\ {
     DriverInterface,
     ResultInterface
 };

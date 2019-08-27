@@ -1,7 +1,7 @@
 <?php
 namespace SqlDriver;
 
-use MongoHybridClientWrapper as Client;
+use MongoHybrid\ClientWrapper as MongoHybridClientWrapper;
 
 use MongoSql\Driver\Driver;
 
@@ -25,11 +25,11 @@ $app->on('cockpit.bootstrap', function (): void {
     }
 
     // Overwrite storage in registry
-    $this->set('storage', function () use ($dbConfig): Client {
+    $this->set('storage', function () use ($dbConfig): MongoHybridClientWrapper {
         static $client = null;
 
         if ($client === null) {
-            $client = new Client(
+            $client = new MongoHybridClientWrapper(
                 $dbConfig['server'],
                 $dbConfig['options'],
                 $dbConfig['driverOptions']

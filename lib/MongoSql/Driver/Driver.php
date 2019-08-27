@@ -8,15 +8,15 @@ use PDOException;
 
 use MongoHybrid\ResultSet;
 
+use MongoHybrid\Contracts\ {
+    CollectionInterface,
+    DriverInterface
+};
+
 use MongoSql\ {
     DriverException,
     Collection,
     ResultIterator
-};
-
-use MongoSql\Contracts\ {
-    CollectionInterface,
-    DriverInterface
 };
 
 use MongoSql\QueryBuilder\QueryBuilder;
