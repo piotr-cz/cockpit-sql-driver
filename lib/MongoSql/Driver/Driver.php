@@ -32,6 +32,16 @@ abstract class Driver implements DriverInterface
     /** @var string - Driver name */
     protected const DB_DRIVER_NAME = null;
 
+    /** @var array - Default driver options, See https://www.php.net/manual/en/pdo.setattribute.php */
+    protected static $defaultDriverOptions = [
+        // Throw exceptions on errors
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        // Set default fetch mode
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_COLUMN,
+        // Use prepares to avoid parsing query selectors as placeholders
+        PDO::ATTR_EMULATE_PREPARES => true,
+    ];
+
     /** @type \PDO - Database connection */
     protected $connection;
 
@@ -53,24 +63,13 @@ abstract class Driver implements DriverInterface
      *   @var string $username
      *   @var string $password
      * }
-     * @param array $driverOptions
+     * @param array [$driverOptions]
      * @throws \MongoSql\DriverException
      */
     public function __construct(array $options, array $driverOptions = [])
     {
-        // Using + to keep keys
-        // See https://www.php.net/manual/en/pdo.setattribute.php
-        $driverOptions = $driverOptions + [
-            // Throw exceptions on errors
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            // Set default fetch mode
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_COLUMN,
-            // Use prepares to avoid parsing query selectors as placeholders
-            PDO::ATTR_EMULATE_PREPARES => true,
-        ];
-
         try {
-            $this->connection = static::createConnection($options, $driverOptions);
+            $this->connection = static::createConnection($options, $driverOptions + static::$defaultDriverOptions);
         } catch (PDOException $pdoException) {
             throw new DriverException(sprintf('PDO connection failed: %s', $pdoException->getMessage()), 0, $pdoException);
         }
