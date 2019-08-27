@@ -25,7 +25,7 @@ class PgsqlDriver extends Driver
     /**
      * @inheritdoc
      */
-    protected function createConnection(array $options, array $driverOptions = []): PDO
+    protected static function createConnection(array $options, array $driverOptions = []): PDO
     {
         // See https://www.php.net/manual/en/ref.pdo-pgsql.connection.php
         return new PDO(

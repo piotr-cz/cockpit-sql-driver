@@ -22,7 +22,7 @@ use MongoSql\ {
 use MongoSql\QueryBuilder\QueryBuilder;
 
 /**
- * Driver factory
+ * Abstract Cockpit CMS database driver
  */
 abstract class Driver implements DriverInterface
 {
@@ -69,7 +69,7 @@ abstract class Driver implements DriverInterface
         ];
 
         try {
-            $this->connection = $this->createConnection($options, $driverOptions);
+            $this->connection = static::createConnection($options, $driverOptions);
         } catch (PDOException $pdoException) {
             throw new DriverException(sprintf('PDO connection failed: %s', $pdoException->getMessage()), 0, $pdoException);
         }
@@ -86,6 +86,16 @@ abstract class Driver implements DriverInterface
     {
         $this->connection = null;
     }
+
+    /**
+     * Create PDO connection
+     *
+     * @param array $options
+     * @param array [$driverOptions]
+     * @return \PDO
+     * @throws \PDOException
+     */
+    abstract protected static function createConnection(array $options, array $driverOptions = []): PDO;
 
     /**
      * Assert features are supported by database
