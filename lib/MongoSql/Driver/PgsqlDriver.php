@@ -8,18 +8,15 @@ use PDO;
 use MongoSql\Driver\Driver;
 
 /**
- * PostgreSQL Driver
+ * Cockpit CMS PostgreSQL Driver
+ * Requires PostgreSQL 9.5+ (extended json added in 9.3, jsonb added in 9.4)
  */
 class PgsqlDriver extends Driver
 {
     /** @inheritdoc */
     protected const DB_DRIVER_NAME = 'pgsql';
 
-    /**
-     * Min db server version
-     * extended json added in 9.3
-     * jsonb added in 9.4
-     */
+    /** @var string - Min db server version */
     protected const DB_MIN_SERVER_VERSION = '9.5';
 
     /**
