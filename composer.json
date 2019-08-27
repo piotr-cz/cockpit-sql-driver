@@ -54,7 +54,7 @@
             "@test:phpunit"
         ],
         "test:phpunit": "phpunit",
-        "test:phpcs": "phpc-cs-fixer fix -vv --diff --dry-run",
+        "test:phpcs": "php-cs-fixer fix -vv --diff --dry-run",
         "phpcs-fix": "php-cs-fixer fix -vv --diff"
     }
 }
