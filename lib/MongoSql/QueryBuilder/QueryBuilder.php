@@ -38,11 +38,12 @@ abstract class QueryBuilder
 
     /**
      * Create query builder from connection
+     *
+     * @param \PDO
+     * @return self
      */
     public static function createFromPdo(PDO $connection): self
     {
-        $pdoDriverName = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
-
         // Get driver name
         $pdoDriverName = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
 
