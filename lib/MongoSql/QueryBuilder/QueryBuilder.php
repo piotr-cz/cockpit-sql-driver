@@ -47,7 +47,7 @@ abstract class QueryBuilder
         // Get driver name
         $pdoDriverName = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
 
-        // Reslve FQCN
+        // Resolve FQCN
         $fqcn = sprintf('%s\\%sQueryBuilder', __NAMESPACE__, ucfirst($pdoDriverName));
 
         if (!class_exists($fqcn)) {
@@ -106,7 +106,7 @@ abstract class QueryBuilder
         }
 
         // Offset (limit must be provided)
-        // https://stackoverflow.com/questions/255517/mysql-offset-infinite-rows
+        // See https://stackoverflow.com/questions/255517/mysql-offset-infinite-rows
         if ($offset) {
             return sprintf('LIMIT %d OFFSET %d', $limit, $offset);
         }
@@ -136,7 +136,7 @@ abstract class QueryBuilder
     /**
      * Build WHERE segments
      *
-     * See \MongoLite\Database\UtilArrayQuery::buildCondition
+     * @see \MongoLite\Database\UtilArrayQuery::buildCondition
      *
      * @param array $criteria
      * @param string $concat
@@ -190,7 +190,7 @@ abstract class QueryBuilder
     /**
      * Build where segments group
      *
-     * See \MongoLite\Database\UtilArrayQuery::check
+     * @see \MongoLite\Database\UtilArrayQuery::check
      *
      * @param string $fieldName
      * @param array $conditions
@@ -225,8 +225,12 @@ abstract class QueryBuilder
      * - $options
      * or throw \InvalidArgumentException when func is not implemented
      *
-     * See \MongoLite\Database\UtilArrayQuery::evaluate
+     * @see \MongoLite\Database\UtilArrayQuery::evaluate
      *
+     * @param string $func
+     * @param string $fieldName
+     * @param mixed $value
+     * @return string|null
      * @throws \InvalidArgumentException
      * @throws \ErrorException
      */
@@ -235,6 +239,9 @@ abstract class QueryBuilder
     /**
      * Build query checking if table exists
      * NOT USED
+     *
+     * @param string $tableName
+     * @return string
      */
     abstract public function buildTableExists(string $tableName): string;
 
@@ -264,9 +271,9 @@ abstract class QueryBuilder
     }
 
     /**
-     * Quote values
-     * @param arrary $values
-     * @param mixed ...$args - Remaining params
+     * Quote multiple values
+     *
+     * @param array $values
      * @return string
      */
     public function qvs(array $values): string
@@ -276,11 +283,9 @@ abstract class QueryBuilder
 
     /**
      * Quote identifier (table or column name)
-     * [NOT USED]
+     *
      * @param string $identifier
      * @return string
-     *
-     * Better use SQL Standard (double quotes)
      */
     abstract public function qi(string $identifier): string;
 

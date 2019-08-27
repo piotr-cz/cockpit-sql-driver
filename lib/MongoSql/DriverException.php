@@ -5,6 +5,9 @@ namespace MongoSql;
 
 use Exception;
 
+/**
+ * General MongoSql driver exception
+ */
 class DriverException extends Exception
 {
 }

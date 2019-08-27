@@ -14,6 +14,7 @@ interface CollectionInterface
      * Count items in collection
      * Used in \install\index.php
      *
+     * @param array|callable [$count]
      * @return int
      */
     public function count($filter = []): int;
@@ -22,6 +23,8 @@ interface CollectionInterface
      * Not used in Cockpit
      * Not part of MongoDB
      * @todo mark MongoHybrid\Client::renameCollection as deprecated
+     *
+     * @param string $newName
      */
     // public function renameCollection(string $newName): void;
 }

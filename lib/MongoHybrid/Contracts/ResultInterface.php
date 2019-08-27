@@ -12,21 +12,23 @@ interface ResultInterface extends Traversable
 {
     /**
      * Populate each document with related one from given collections
+     *
      * @param iterable $collections - Format [foreign key => collection name]
-     * @return void
      */
-    public function hasOne(iterable $collections): ResultInterface;
+    public function hasOne(iterable $collections);
 
     /**
      * Populate each document with with related ones from given collections
+     *
      * @param iterable $collections - Format [collection name => foreign key]
-     * @return void
      */
-    public function hasMany(iterable $collections): ResultInterface;
+    public function hasMany(iterable $collections);
 
     /**
      * Convert to array
      * Note: should be able to typecast to array
+     *
+     * @return array
      */
     public function toArray(): array;
 }

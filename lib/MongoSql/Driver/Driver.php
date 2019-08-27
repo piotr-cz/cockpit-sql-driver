@@ -45,6 +45,7 @@ abstract class Driver implements DriverInterface
      * Constructor
      *
      * @param array $options {
+     *   @var string $connection
      *   @var string [$host]
      *   @var int [$port]
      *   @var string $dbname

@@ -20,8 +20,9 @@ use MongoSql\QueryBuilder\QueryBuilder;
 
 /**
  * Cursor implementation
+ *
  * @see {@link MongoDB\Driver\Cursor https://www.php.net/manual/en/class.mongodb-driver-cursor.php}
- * @see MongoDB\Operation\Find
+ * @see \MongoDB\Operation\Find
  *
  * @note this is different than https://www.php.net/manual/en/class.mongocursor.php
  */
@@ -60,8 +61,13 @@ class Cursor implements IteratorAggregate, CursorInterface
      *   @var array [$projection]
      * }
      */
-    public function __construct(PDO $connection, QueryBuilder $queryBuilder, string $collectionName, $filter = [], array $options = [])
-    {
+    public function __construct(
+        PDO $connection,
+        QueryBuilder $queryBuilder,
+        string $collectionName,
+        $filter = [],
+        array $options = []
+    ) {
         $this->connection = $connection;
         $this->queryBuilder = $queryBuilder;
 
@@ -83,6 +89,7 @@ class Cursor implements IteratorAggregate, CursorInterface
      * IteratorAggregate implementation
      *
      * @see {@link https://www.php.net/manual/en/class.generator.php}
+     *
      * @return \Traversable
      * @throws \PDOException
      */
@@ -143,7 +150,10 @@ SQL;
     }
 
     /**
-     * Create projection schema
+     * Compile projection
+     *
+     * @param array|null $projection
+     * @return array
      */
     protected static function compileProjection(array $projection = null): ?array
     {
@@ -163,12 +173,12 @@ SQL;
     /**
      * Apply projection to document
      *
-     * @param array $document
-     * @param array $projection {
+     * @param array|null $document
+     * @param array [$projection] {
      *   @var array $exclude
      *   @var array $include
      * }
-     * @return array
+     * @return array|null
      */
     public static function applyDocumentProjection(?array $document, array $projection = null): ?array
     {
@@ -201,6 +211,11 @@ SQL;
 
 /**
  * Apply callback to every element
+ *
+ * @param iterable $iterable
+ * @param callable $function
+ * @param mixed ...$args - Custom arguments
+ * @return \Generator
  */
 function mapIterator(iterable $iterable, callable $function, ...$args): Generator {
     foreach ($iterable as $key => $value) {

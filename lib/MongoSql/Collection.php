@@ -32,6 +32,10 @@ class Collection implements CollectionInterface
 
     /**
      * Constructor
+     *
+     * @param \PDO
+     * @param \MongoSql\QueryBuilder\QueryBuilder
+     * @param callable [$handleCollectionDrop]
      */
     public function __construct(
         PDO $connection,
@@ -53,7 +57,6 @@ class Collection implements CollectionInterface
      * @param \PDO
      * @param \MongoSql\QueryBuilder\QueryBuilder $queryBuilder
      * @param callable [$handleCollectionDrop]
-     *
      * @return callable
      */
     public static function factory(
@@ -73,6 +76,8 @@ class Collection implements CollectionInterface
 
     /**
      * Return collection namespace
+     *
+     * @return string
      */
     public function __toString(): string
     {
@@ -82,8 +87,8 @@ class Collection implements CollectionInterface
     /**
      * Find document
      *
-     * @param array|callable
-     * @param array $options {
+     * @param array|callable $filter
+     * @param array [$options] {
      *   @var array [$sort]
      *   @var int [$limit]
      *   @var int [$skip]
@@ -104,7 +109,8 @@ class Collection implements CollectionInterface
     /**
      * Find one document
      *
-     * @param array|callable
+     * @param array|callable $filter
+     * @param array [$options]
      * @return array|null
      */
     public function findOne($filter = [], array $options = []): ?array
@@ -153,8 +159,8 @@ SQL
      *   `SET "document" = "document" || :data::jsonb`
      *
      * @param array|callable $filter
-     * @param array $update Data to apply to the matched documents
-     * @param array $options
+     * @param array $update - Data to apply to the matched documents
+     * @param array [$options]
      * @return bool
      */
     public function updateMany($filter, array $update, array $options = []): bool
@@ -207,6 +213,7 @@ SQL
      *
      * @param array $filter
      * @param array $update Data to replace to the matched documents
+     * @return bool
      */
     public function replaceOne(array $filter, array $replace): bool
     {
@@ -232,7 +239,8 @@ SQL
     /**
      * Delete documents
      *
-     * @param array $filter
+     * @param array [$filter]
+     * @return bool
      */
     public function deleteMany(array $filter = []): bool
     {
@@ -254,7 +262,7 @@ SQL
     /**
      * Count documents
      *
-     * @param array|callable $filter
+     * @param array|callable [$filter]
      * @return int
      */
     public function countDocuments($filter = []): int
@@ -329,10 +337,11 @@ SQL
     }
 }
 
-// Copied from MongoLite\Database
+/**
+ * @see MongoLite\Database
+ */
 function createMongoDbLikeId()
 {
-
     // based on https://gist.github.com/h4cc/9b716dc05869296c1be6
 
     $timestamp = \microtime(true);

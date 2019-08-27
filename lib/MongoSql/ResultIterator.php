@@ -58,7 +58,10 @@ class ResultIterator extends IteratorIterator implements ResultInterface
     }
 
     /**
-     * Apply has one relationshipt to document
+     * Apply hasOne relationship to document
+     *
+     * @param array &$doc
+     * @return self
      */
     protected function applyHasOne(array &$doc): self
     {
@@ -97,6 +100,9 @@ class ResultIterator extends IteratorIterator implements ResultInterface
 
     /**
      * Apply hasMany relationship to document
+     *
+     * @param array &$doc
+     * @return self
      */
     public function applyHasMany(array &$doc): self
     {
