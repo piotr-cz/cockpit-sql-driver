@@ -24,10 +24,10 @@
         "friendsofphp/php-cs-fixer": "^2.15"
     },
     "suggest": {
-        "aheinze/cockpit": "Please install Cockpit before installing this addon",
         "ext-pdo_mysql": "For MySQL support",
         "ext-pdo_pgsql": "For PostgreSQL support",
-        "ext-mongodb": "For running tests with MongoDB"
+        "ext-mongodb": "For running tests with MongoDB",
+        "aheinze/cockpit": "Please install Cockpit before installing this addon"
     },
     "autoload-dev": {
         "psr-4": {

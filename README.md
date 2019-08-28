@@ -11,7 +11,7 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 - Cockpit CMS (next or legacy)
 - MySQL 5.7.9/ MariaDB 10.2.6/ PostgreSQL 9.4
 - PHP 7.1
-- PHP extensions: *pdo*, *pdo_mysql*/ *pdo_pgsql*
+- Enabled PHP extensions: *pdo*, *pdo_mysql*/ *pdo_pgsql*
 
 
 ## Installation
@@ -19,7 +19,7 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 
 ### Manual
 
-Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/releases/latest) and place in under `cockpit/addons/SqlDriver` directory
+Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/releases/latest) and extract to `COCKPIT_PATH/addons/SqlDriver` directory
 
 
 ### Using Composer
@@ -27,7 +27,7 @@ Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/release
 1. Make sure path to cockpit addons are defined in composer.json
    ```json
    {
-       "name": "my-project",
+       "name": "MY_PROJECT",
        "extra": {
            "installer-paths": {
                "public/cockpit/addons/{$name}": ["type:cockpit-module"]
@@ -96,14 +96,13 @@ _Reference: Cockpit docs > [CLI](https://getcockpit.com/documentation/reference/
 ## Testing
 
 There are integration tests included in the package.
-These require Cockpit CMS as a dev dependency and use it's _MongoHybrid Client_ API to run actions on database
+These require Cockpit CMS as a dev dependency and use it's _MongoHybrid\Client_ API to run actions on database
 
 1. Install dependencies
    ```sh
    cd cockpit/addons/SqlDriver
-   composer install --no-plugins
+   composer install
    ```
-   _option `--no-plugins` due to [this issue](https://github.com/composer/installers/issues/430)_
 
 2. Configure test database: copy [`/phpunit.xml.dist`](./phpunit.xml.dist) to `/phpunit.xml` and set up variables as in [configuration](#configuration)
 
@@ -159,7 +158,6 @@ By default package creates virtual column `_id` with unique index on every creat
 If you would like to speed up filters on other collection fields add virtual column with suitable index and type
 
 - MySQL:
-
   ```sql
   ALTER TABLE
       `{$tableName}` ADD COLUMN `{$fieldName}_virtual` INT AS (`document` ->> '$.{$fieldName}') NOT NULL,
@@ -169,12 +167,20 @@ If you would like to speed up filters on other collection fields add virtual col
   _Reference: MySQL 5.7 > [CREATE INDEX](https://dev.mysql.com/doc/refman/5.7/en/create-index.html)_
 
 - PosgreSQL:
-
   ```sql
   CREATE [UNIQUE] INDEX "idx_{$tableName}_{$fieldName}" ON "{$tableName}" ((("document" ->> '{$fieldName}')::int));
   ```
 
   _Reference: PostgreSQL 9.4 > [CREATE INDEX](https://www.postgresql.org/docs/9.4/sql-createindex.html)_
+
+
+## Known issues
+
+### Composer installation fails _(Plugin installation failed, rolling back)_
+
+Related to [VirtualBox issue](https://github.com/laravel/homestead/issues/1240)
+
+Use composer `--no-plugins` option in install/ require
 
 
 ## Copyright and license
