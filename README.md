@@ -80,6 +80,7 @@ _Rererence: Cockpit docs > [Configuration](https://getcockpit.com/documentation/
 
 1. Export data to `/migration` subdirectory
    ``` sh
+   mkdir migration
    ./cp export --target migration
    ```
 
@@ -88,6 +89,7 @@ _Rererence: Cockpit docs > [Configuration](https://getcockpit.com/documentation/
 3. Import data from `/migration` subdirectory
    ```sh
    ./cp import --src migration
+   rm -rf migration
    ```
 
 _Reference: Cockpit docs > [CLI](https://getcockpit.com/documentation/reference/CLI)_
