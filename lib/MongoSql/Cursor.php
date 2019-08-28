@@ -217,7 +217,8 @@ SQL;
  * @param mixed ...$args - Custom arguments
  * @return \Generator
  */
-function mapIterator(iterable $iterable, callable $function, ...$args): Generator {
+function mapIterator(iterable $iterable, callable $function, ...$args): Generator
+{
     foreach ($iterable as $key => $value) {
         yield $key => $function($value, ...$args);
     }
