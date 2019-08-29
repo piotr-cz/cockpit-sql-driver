@@ -22,6 +22,12 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/releases/latest) and extract to `COCKPIT_PATH/addons/SqlDriver` directory
 
 
+## Using Cockpit CLI
+```sh
+./cp install/addon --name SqlDriver --url https://github.com/piotr-cz/cockpit-sql-driver/archive/master.zip
+```
+
+
 ### Using Composer
 
 1. Make sure path to cockpit addons are defined in composer.json
