@@ -8,6 +8,13 @@ use MongoSql\Driver\Driver;
 // Set autoloader (may use composer generated if avail)
 require_once __DIR__ . '/autoload.php';
 
+$dbConfig = $app->retrieve('config/database');
+
+// Skip when server other than sqldriver
+if ($dbConfig['server'] !== Driver::SERVER_NAME) {
+    return;
+}
+
 /**
  * Register on bootstrap
  * @var \LimeExtra\App $this
@@ -16,14 +23,7 @@ require_once __DIR__ . '/autoload.php';
  *
  * Note: classes may be autoloaded after app has booted which happens after module is booted
  */
-$app->on('cockpit.bootstrap', function (): void {
-    $dbConfig = $this['config']['database'];
-
-    // Skip when server other than sqldriver
-    if ($dbConfig['server'] !== Driver::SERVER_NAME) {
-        return;
-    }
-
+$app->on('cockpit.bootstrap', function () use ($dbConfig): ?bool {
     // Overwrite storage in registry
     $this->set('storage', function () use ($dbConfig): MongoHybridClientWrapper {
         static $client = null;
@@ -39,5 +39,5 @@ $app->on('cockpit.bootstrap', function (): void {
         return $client;
     });
 
-    return;
+    return true;
 }, 1);
