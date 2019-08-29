@@ -36,6 +36,7 @@ env:
   # - DB=mongodb
 
 before_script:
+  - phpenv config-rm xdebug.ini
   - composer install --no-interaction --no-plugins
   - sh -c "if [ '$DB' = 'mysql' ] || [ '$DB' = 'mariadb' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS cockpitdb;'; fi"
   # To fix issue https://travis-ci.community/t/mariadb-10-1-fails-to-install-on-xenial/3151
