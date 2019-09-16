@@ -22,7 +22,8 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/releases/latest) and extract to `COCKPIT_PATH/addons/SqlDriver` directory
 
 
-## Using Cockpit CLI
+### Using Cockpit CLI _(development version)_
+
 ```sh
 ./cp install/addon --name SqlDriver --url https://github.com/piotr-cz/cockpit-sql-driver/archive/master.zip
 ```
@@ -31,6 +32,7 @@ Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/release
 ### Using Composer
 
 1. Make sure path to cockpit addons are defined in composer.json
+
    ```json
    {
        "name": "MY_PROJECT",
@@ -42,7 +44,8 @@ Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/release
    }
    ```
 
-2. Run
+2. Run command
+
    ```sh
    composer require piotr-cz/cockpit-sql-driver
    ```
@@ -85,6 +88,7 @@ _Rererence: Cockpit docs > [Configuration](https://getcockpit.com/documentation/
 ## Database data migration (Cockpit v0.6.0+)
 
 1. Export data to `/migration` subdirectory
+
    ``` sh
    mkdir migration
    ./cp export --target migration
@@ -93,6 +97,7 @@ _Rererence: Cockpit docs > [Configuration](https://getcockpit.com/documentation/
 2. Switch database to _sqldriver_ (see [Configuration](#configuration))
 
 3. Import data from `/migration` subdirectory
+
    ```sh
    ./cp import --src migration
    rm -rf migration
@@ -107,6 +112,7 @@ There are integration tests included in the package.
 These require Cockpit CMS as a dev dependency and use it's _MongoHybrid\Client_ API to run actions on database
 
 1. Install dependencies
+
    ```sh
    cd cockpit/addons/SqlDriver
    composer install
@@ -115,6 +121,7 @@ These require Cockpit CMS as a dev dependency and use it's _MongoHybrid\Client_ 
 2. Configure test database: copy [`/phpunit.xml.dist`](./phpunit.xml.dist) to `/phpunit.xml` and set up variables as in [configuration](#configuration)
 
 3. Run tests with PHPUnit
+
    ```sh
    ./vendor/bin/phpunit
    ```
@@ -166,6 +173,7 @@ By default package creates virtual column `_id` with unique index on every creat
 If you would like to speed up filters on other collection fields add virtual column with suitable index and type
 
 - MySQL:
+
   ```sql
   ALTER TABLE
       `{$tableName}` ADD COLUMN `{$fieldName}_virtual` INT AS (`document` ->> '$.{$fieldName}') NOT NULL,
@@ -175,6 +183,7 @@ If you would like to speed up filters on other collection fields add virtual col
   _Reference: MySQL 5.7 > [CREATE INDEX](https://dev.mysql.com/doc/refman/5.7/en/create-index.html)_
 
 - PosgreSQL:
+
   ```sql
   CREATE [UNIQUE] INDEX "idx_{$tableName}_{$fieldName}" ON "{$tableName}" ((("document" ->> '{$fieldName}')::int));
   ```
