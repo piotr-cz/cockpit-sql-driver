@@ -31,7 +31,7 @@ Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/release
 
 ### Using Composer
 
-1. Make sure path to cockpit addons are defined in composer.json
+1. Make sure path to cockpit addons are defined in your projects' _composer.json_ file
 
    ```json
    {
@@ -44,7 +44,7 @@ Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/release
    }
    ```
 
-2. Run command
+2. In your project root run command
 
    ```sh
    composer require piotr-cz/cockpit-sql-driver
@@ -53,7 +53,7 @@ Download [latest release](https://github.com/piotr-cz/cockpit-sql-driver/release
 
 ## Configuration
 
-Example configuration for `/config/config.php` file:
+Example configuration for `COCKPIT_PATH/config/config.php` file:
 
 ```php
 <?php
@@ -87,16 +87,16 @@ _Rererence: Cockpit docs > [Configuration](https://getcockpit.com/documentation/
 
 ## Database data migration (Cockpit v0.6.0+)
 
-1. Export data to `/migration` subdirectory
+1. Export data to `COCKPIT_PATH/migration` subdirectory
 
-   ``` sh
+   ```sh
    mkdir migration
    ./cp export --target migration
    ```
 
 2. Switch database to _sqldriver_ (see [Configuration](#configuration))
 
-3. Import data from `/migration` subdirectory
+3. Import data from `COCKPIT_PATH/migration` subdirectory
 
    ```sh
    ./cp import --src migration
@@ -114,7 +114,7 @@ These require Cockpit CMS as a dev dependency and use it's _MongoHybrid\Client_ 
 1. Install dependencies
 
    ```sh
-   cd cockpit/addons/SqlDriver
+   cd COCKPIT_PATH/addons/SqlDriver
    composer install
    ```
 
