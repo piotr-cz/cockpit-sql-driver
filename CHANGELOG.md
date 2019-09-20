@@ -10,5 +10,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/olivierlacan/keep-a-changelog/compare/v1.0.0-beta.1...HEAD
-[1.0.0-beta.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v1.0.0-beta.1
+[Unreleased]: https://github.com/piotr-cz/cockpit-sql-driver/compare/v1.0.0-beta.1...HEAD
+[1.0.0-beta.1]: https://github.com/piotr-cz/cockpit-sql-driver/releases/tag/v1.0.0-beta.1
