@@ -16,6 +16,12 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 
 ## Installation
 
+_Note:_
+
+If you installed addon before ever starting Cockpit, some errors may come up.
+
+To solve it, start Cockpit with configuration it supports out of the box to trigger a warmup and then switch to [Configuration](#configuration) specific for this addon.
+
 
 ### Manual
 
@@ -192,6 +198,24 @@ If you would like to speed up filters on other collection fields add virtual col
 
 
 ## Known issues
+
+### Error: `Call to a member function toArray() on null`
+
+This happens when starting cockpit for the first time and addon is installed.
+Problem is in that native Cockpit modules try to accesss storage which is initialized later (during custom modules bootstrap).
+
+Cockpit must be started for the first time without this module configured.
+
+**Solution 1**
+Start Cockpit with default database configuration and than switch to `sqldriver` as described [here](#configuration)
+
+**Solution 2**
+Manually create file `COCKPIT_STORAGE_FOLDER/tmp/webhooks.cache.php` with content
+
+```php
+<?php return [];
+```
+
 
 ### Composer installation fails _(Plugin installation failed, rolling back)_
 
