@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * Autoload classes when not using composers' generated autoload
  * Similar to following in composer.json

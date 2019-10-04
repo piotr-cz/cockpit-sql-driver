@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace MongoHybrid;
 
 use MongoHybrid\Client as MongoHybridClient;
@@ -32,7 +34,7 @@ class ClientWrapper extends MongoHybridClient
         $fqcn = sprintf('MongoSql\Driver\%sDriver', ucfirst($options['connection']));
 
         if (!class_exists($fqcn)) {
-            throw new DriverException(sprintf('SQL Driver for %s not found', $options['connection']));
+            throw new DriverException(sprintf('SQL driver for %s not found', $options['connection']));
         }
 
         // Create new driver
