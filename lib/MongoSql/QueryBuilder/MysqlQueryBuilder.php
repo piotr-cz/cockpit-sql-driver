@@ -97,7 +97,6 @@ class MysqlQueryBuilder extends QueryBuilder
                     $this->qv($value),
                 ]);
 
-
             case '$all':
                 if (!is_array($value)) {
                     throw new InvalidArgumentException('Invalid argument for $all option must be array');
@@ -107,7 +106,6 @@ class MysqlQueryBuilder extends QueryBuilder
                     $pathSelector,
                     $this->qvs($value),
                 ]);
-
 
             // Note cockpit default is case sensitive
             // Note: ^ doesn't work
