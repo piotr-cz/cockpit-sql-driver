@@ -38,7 +38,7 @@ env:
 
 before_script:
   - phpenv config-rm xdebug.ini
-  - composer install --no-interaction
+  - composer install --no-interaction --ignore-platform-reqs
   - sh -c "if [ '$DB' = 'mysql' ] || [ '$DB' = 'mariadb' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS cockpitdb;'; fi"
   # To fix issue https://travis-ci.community/t/mariadb-10-1-fails-to-install-on-xenial/3151
   - sh -c "if [ '$DB' = 'mariadb' ]; then mysql -u root -e 'CREATE USER IF NOT EXISTS travis@localhost; GRANT ALL ON *.* TO travis@localhost;'; fi"
