@@ -52,7 +52,7 @@ class ClientWrapper extends SimpleStorageClient
     /**
      * @inheritdoc
      */
-    public function get($key, $default = null): ?array
+    public function get($key, $default = null)
     {
         $val = $this->driver->findOne($this->collectionName, ['key' => $key]);
 
