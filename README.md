@@ -226,4 +226,4 @@ Use composer `--no-plugins` option in install/ require
 
 ## Copyright and license
 
-Copyright 2019 Piotr Konieczny under the MIT license.
+Copyright since 2019 Piotr Konieczny under the MIT license.
