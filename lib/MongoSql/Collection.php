@@ -123,15 +123,10 @@ class Collection implements CollectionInterface
     }
 
     /**
-     * Insert new document into collection
-     *
-     * @param array &$doc
-     * @return bool
+     * @inheritdoc
      */
-    public function insertOne(array &$doc): bool
+    public function insertMany(array $documents): int
     {
-        $doc['_id'] = createMongoDbLikeId();
-
         $stmt = $this->connection->prepare(
             <<<SQL
 
@@ -144,21 +139,26 @@ class Collection implements CollectionInterface
 SQL
         );
 
-        $stmt->execute([':data' => QueryBuilder::jsonEncode($doc)]);
+        foreach ($documents as &$document) {
+            $document['_id'] = createMongoDbLikeId();
 
-        return true;
+            $stmt->execute([':data' => QueryBuilder::jsonEncode($document)]);
+        }
+
+        return count($documents);
     }
 
     /**
-     * @inheritdoc
+     * Insert new document into collection
+     *
+     * @param array &$document
+     * @return bool
      */
-    public function insertMany(array $documents): int
+    public function insertOne(&$document): bool
     {
-        foreach ($documents as $document) {
-            $this->insertOne($document);
-        }
+        $this->insertMany([$document]);
 
-        return count($document);
+        return true;
     }
 
     /**
