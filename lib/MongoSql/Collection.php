@@ -150,6 +150,18 @@ SQL
     }
 
     /**
+     * @inheritdoc
+     */
+    public function insertMany(array $documents): int
+    {
+        foreach ($documents as $document) {
+            $this->insertOne($document);
+        }
+
+        return count($document);
+    }
+
+    /**
      * Update documents by merging with it's data
      *
      * Ideally should use one query to update all rows with:

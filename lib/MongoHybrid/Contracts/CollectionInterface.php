@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace MongoHybrid\Contracts;
 
+/**
+ * Interface for methods used directly on collection by Cockpit
+ * Example: `$this->app->storage->getCollection('foobar')->count()`
+ */
 interface CollectionInterface
 {
     /**
@@ -18,6 +22,14 @@ interface CollectionInterface
      * @return int
      */
     public function count($filter = []): int;
+
+    /**
+     * Insert many documents
+     *
+     * @param array $documents
+     * @return count of inserted documents for arrays
+     */
+    public function insertMany(array $documents): int;
 
     /**
      * Not used in Cockpit
