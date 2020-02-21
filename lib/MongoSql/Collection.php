@@ -125,7 +125,7 @@ class Collection implements CollectionInterface
     /**
      * @inheritdoc
      */
-    public function insertMany(array $documents): int
+    public function insertMany(array &$documents): int
     {
         $stmt = $this->connection->prepare(
             <<<SQL
@@ -156,7 +156,12 @@ SQL
      */
     public function insertOne(&$document): bool
     {
-        $this->insertMany([$document]);
+        // Trick to pass document by reference
+        $documents = [$document];
+
+        $this->insertMany($documents);
+
+        $document = array_pop($documents);
 
         return true;
     }
