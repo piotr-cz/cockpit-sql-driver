@@ -21,7 +21,7 @@
     "require-dev": {
         "aheinze/cockpit": "0.*",
         "phpunit/phpunit": "^7.5",
-        "friendsofphp/php-cs-fixer": "^2.15"
+        "friendsofphp/php-cs-fixer": "^2.16.1"
     },
     "suggest": {
         "ext-pdo_mysql": "For MySQL support",
