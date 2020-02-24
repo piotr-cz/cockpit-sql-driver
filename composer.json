@@ -19,7 +19,7 @@
         "composer/installers": "^1.2"
     },
     "require-dev": {
-        "aheinze/cockpit": "^0.9",
+        "aheinze/cockpit": "0.*",
         "phpunit/phpunit": "^7.5",
         "friendsofphp/php-cs-fixer": "^2.15"
     },
