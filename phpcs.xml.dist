@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ruleset name="Cockpit CMS SQL Driver addon">
+    <!--
+        [Docs](https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-Ruleset)
+    -->
+
+    <!--
+        Note: files without extensions cannot be checked
+        [https://github.com/squizlabs/PHP_CodeSniffer/issues/1754]
+    -->
+
+    <file>./lib</file>
+    <file>./tests</file>
+
+    <arg name="colors" />
+
+    <rule ref="PSR12" />
+
+    <rule ref="PSR12.Files.FileHeader">
+        <exclude-pattern>./*</exclude-pattern>
+    </rule>
+
+    <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>./*</exclude-pattern>
+        <properties>
+            <property name="lineLimit" value="120" />
+            <property name="absoluteLineLimit" value="0" />
+        </properties>
+    </rule>
+
+    <rule ref="PEAR.Functions.ValidDefaultValue">
+      <exclude-pattern>./lib/MongoSql/Driver/Driver.php</exclude-pattern>
+    </rule>
+</ruleset>
