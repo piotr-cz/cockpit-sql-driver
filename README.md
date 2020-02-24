@@ -14,7 +14,7 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 - Enabled PHP extensions: *pdo*, *pdo_mysql*/ *pdo_pgsql*
 
 
-## Compatibility table
+### Compatibility table
 
  Cockpit version    | Addon version
 ------------------- | -------------
@@ -99,7 +99,7 @@ return [
 _Rererence: Cockpit docs > [Configuration](https://getcockpit.com/documentation/reference/configuration)_
 
 
-## Database data migration (Cockpit v0.6.0+)
+## Database content migration (Cockpit v0.6.0+)
 
 1. Export data to `COCKPIT_PATH/migration` subdirectory
 
@@ -123,7 +123,9 @@ _Reference: Cockpit docs > [CLI](https://getcockpit.com/documentation/reference/
 ## Testing
 
 There are integration tests included in the package.
-These require Cockpit CMS as a dev dependency and use it's _MongoHybrid\Client_ API to run actions on database
+These require Cockpit CMS as a dev dependency and use it's _MongoHybrid\Client_ API to run actions on database.
+
+To run tests
 
 1. Install dependencies
 
@@ -132,7 +134,9 @@ These require Cockpit CMS as a dev dependency and use it's _MongoHybrid\Client_ 
    composer install
    ```
 
-2. Configure test database: copy [`/phpunit.xml.dist`](./phpunit.xml.dist) to `/phpunit.xml` and set up variables as in [configuration](#configuration)
+2. Configure test database
+
+   copy [`/phpunit.xml.dist`](./phpunit.xml.dist) to `/phpunit.xml` and set up variables as in [configuration](#configuration)
 
 3. Run tests with PHPUnit
 
@@ -143,7 +147,7 @@ These require Cockpit CMS as a dev dependency and use it's _MongoHybrid\Client_ 
 
 ## Drawbacks
 
-Cockpit doesn't provide public API to register custom databse drivers so this addon monkey-patches Cockpit Driver selector client (_MongoHybrid Client_).
+Cockpit doesn't provide public API to register custom database drivers so this addon monkey-patches Cockpit Driver selector client (_MongoHybrid Client_).
 This means that there is no guarantee that this addon will work in future versions of Cockpit.
 
 
@@ -156,35 +160,35 @@ This means that there is no guarantee that this addon will work in future versio
 - `$fuzzy`
 
 
-#### Works differently
+#### Work differently
 
 - callable
 
-  [unlike SQLite](https://www.php.net/manual/en/pdo.sqlitecreatefunction.php) PDO MySQL and PostgreSQL drivers don't have support for User Defined Functions in PHP language so callable is evaluated on every result fetch.
+  [Unlike SQLite](https://www.php.net/manual/en/pdo.sqlitecreatefunction.php), PDO MySQL and PostgreSQL drivers don't have support for User Defined Functions in PHP language - so callable is evaluated on every result fetch.
   If you have lots of documents in collection and care about performance use other filters.
 
 - `$in`, `$nin`
 
-  when databse value is an array, evaluates to false
+  When database value is an array, evaluates to false.
 
 - `$regexp`
   - MySQL implemented via [REGEXP](https://dev.mysql.com/doc/refman/5.7/en/regexp.html) + case insensitive
   - PostgreSQL impemeted via [POSIX Regular Expressions](https://www.postgresql.org/docs/9.4/functions-matching.html#FUNCTIONS-POSIX-REGEXP) + case insensitive
 
-  wrapping expression in `//` or adding flags like `/foobar/i` doesn't work, as MySQL and PosgreSQL Regexp functions don't support flags
+  Wrapping expression in `//` or adding flags like `/foobar/i` won't work, as MySQL and PosgreSQL Regexp functions don't support flags.
 
 - `$text`
   - MySQL implemeted via [LIKE](https://dev.mysql.com/doc/refman/5.7/en/string-comparison-functions.html#operator_like)
   - PostgreSQL implementad via [LIKE](https://www.postgresql.org/docs/9.4/functions-matching.html#FUNCTIONS-LIKE)
 
-  options are not supported (_$minScore_, _$distance_, _$search_)
+  Filter options are not supported (_$minScore_, _$distance_, _$search_).
 
 
 ## Manual database optimisations
 
 By default package creates virtual column `_id` with unique index on every created collection.
 
-If you would like to speed up filters on other collection fields add virtual column with suitable index and type
+If you would like to speed up filters on other collection fields - add virtual column with suitable index and type.
 
 - MySQL:
 
