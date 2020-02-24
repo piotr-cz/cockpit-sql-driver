@@ -184,18 +184,20 @@ This means that there is no guarantee that this addon will work in future versio
   Filter options are not supported (_$minScore_, _$distance_, _$search_).
 
 
-## Manual database optimisations
+## Manual database optimizations
 
 By default package creates virtual column `_id` with unique index on every created collection.
 
 If you would like to speed up filters on other collection fields - add virtual column with suitable index and type.
 
+For example to add virtual column of integer type for field FIELD_NAME in TABLE_NAME collection, use
+
 - MySQL:
 
   ```sql
   ALTER TABLE
-      `{$tableName}` ADD COLUMN `{$fieldName}_virtual` INT AS (`document` ->> '$.{$fieldName}') NOT NULL,
-      ADD UNIQUE | KEY `idx_{$tableName}_{$fieldName}` (`{$fieldName}_virtual`);
+      `{TABLE_NAME}` ADD COLUMN `{FIELD_NAME}_virtual` INT AS (`document` ->> '$.{FIELD_NAME}') NOT NULL,
+      ADD UNIQUE | KEY `idx_{TABLE_NAME}_{FIELD_NAME}` (`{FIELD_NAME}_virtual`);
   ```
 
   _Reference: MySQL 5.7 > [CREATE INDEX](https://dev.mysql.com/doc/refman/5.7/en/create-index.html)_
@@ -203,7 +205,7 @@ If you would like to speed up filters on other collection fields - add virtual c
 - PosgreSQL:
 
   ```sql
-  CREATE [UNIQUE] INDEX "idx_{$tableName}_{$fieldName}" ON "{$tableName}" ((("document" ->> '{$fieldName}')::int));
+  CREATE [UNIQUE] INDEX "idx_{TABLE_NAME}_{FIELD_NAME}" ON "{FIELD_NAME}" ((("document" ->> '{FIELD_NAME}')::int));
   ```
 
   _Reference: PostgreSQL 9.4 > [CREATE INDEX](https://www.postgresql.org/docs/9.4/sql-createindex.html)_
