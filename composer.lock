@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10f44dd26f2c28945b84e06037e82330",
+    "content-hash": "fb33398f4c94424f12f4eb746d1a378b",
     "packages": [
         {
             "name": "composer/installers",
@@ -134,16 +134,16 @@
     "packages-dev": [
         {
             "name": "aheinze/cockpit",
-            "version": "0.9.3",
+            "version": "0.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/agentejo/cockpit.git",
-                "reference": "3bc56d6e50af1529c454663d78bb130bc0e5abf7"
+                "reference": "23e3a49ee4a717a4847fd798a2b621711f3eb598"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/agentejo/cockpit/zipball/3bc56d6e50af1529c454663d78bb130bc0e5abf7",
-                "reference": "3bc56d6e50af1529c454663d78bb130bc0e5abf7",
+                "url": "https://api.github.com/repos/agentejo/cockpit/zipball/23e3a49ee4a717a4847fd798a2b621711f3eb598",
+                "reference": "23e3a49ee4a717a4847fd798a2b621711f3eb598",
                 "shasum": ""
             },
             "require": {
@@ -179,7 +179,7 @@
                 "cockpit",
                 "headles"
             ],
-            "time": "2019-09-25T21:40:44+00:00"
+            "time": "2020-01-18T19:06:36+00:00"
         },
         {
             "name": "claviska/simpleimage",
