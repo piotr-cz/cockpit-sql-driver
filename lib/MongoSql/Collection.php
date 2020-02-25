@@ -15,6 +15,33 @@ use MongoSql\QueryBuilder\QueryBuilder;
 /**
  * Minimum set of MongoDB\Collection methods requied for Cockpit
  * @see MongoDB\Collection
+ *
+ * Not implemented:
+ * - aggregate
+ * - bulkWrite
+ * - createIndex
+ * - createIndexes
+ * - deleteOne
+ * - distinct
+ * - dropIndex
+ * - dropIndexes
+ * - EstimatedDocumentCount
+ * - explain
+ * - findOneAndDelete
+ * - findOneAndReplace
+ * - findOneAndUpdate
+ * - getCollectionName
+ * - getDatabaseName
+ * - getManager
+ * - getNamespace
+ * - getReadConcern
+ * - getReadPreference
+ * - getTypeMap
+ * - getWriteConcern
+ * - listIndexes
+ * - mapReduce
+ * - watch
+ * - withOptions
  */
 class Collection implements CollectionInterface
 {
