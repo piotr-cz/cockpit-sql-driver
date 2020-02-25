@@ -123,6 +123,14 @@ class ClientTest extends TestCase
     }
 
     /**
+     * @inheritdoc
+     */
+    public function tearDown(): void
+    {
+        static::$storage->dropCollection($this->mockCollectionId);
+    }
+
+    /**
      * Test drop collection
      *
      * Can test only by checking database via raw connection
@@ -844,13 +852,5 @@ class ClientTest extends TestCase
         $this->assertTrue(
             in_array('bio', array_keys($items[0]))
         );
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function tearDown(): void
-    {
-        static::$storage->dropCollection($this->mockCollectionId);
     }
 }
