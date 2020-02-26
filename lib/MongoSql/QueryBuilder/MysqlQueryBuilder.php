@@ -78,14 +78,12 @@ class MysqlQueryBuilder extends QueryBuilder
                     $pathSelector,
                     $this->qvs($value),
                 ]);
-                break;
 
             case '$nin':
                 return vsprintf('%s NOT IN (%s)', [
                     $pathSelector,
                     $this->qvs($value),
                 ]);
-                break;
 
             case '$has':
                 if (!is_string($value)) {
