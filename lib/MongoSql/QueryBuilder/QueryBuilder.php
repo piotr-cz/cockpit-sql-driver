@@ -254,25 +254,18 @@ abstract class QueryBuilder
     abstract public function buildCreateTable(string $tableName): string;
 
     /**
-     * Quote JSON value
-     * Note: All types are quoted as strings {@link https://stackoverflow.com/a/5356779/1012616}
-     *
+     * Quote value
      * @param mixed $value
+     * @return string
      * @throws \TypeError - When passing non-string to quote: PDO::quote() expects parameter 1 to be string, xxx given
      */
     public function qv($value): string
     {
-        // Convert some types to strings using json encode instead of internal casting
-        if (!is_string($value)) {
-            $value = static::jsonEncode($value);
-        }
-
         return ($this->connectionQuote)((string) $value);
     }
 
     /**
      * Quote multiple values
-     *
      * @param array $values
      * @return string
      */
