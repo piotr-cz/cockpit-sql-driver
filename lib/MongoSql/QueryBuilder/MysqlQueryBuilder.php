@@ -158,11 +158,7 @@ class MysqlQueryBuilder extends QueryBuilder
 
                 return vsprintf('%s LIKE %s', [
                     $pathSelector,
-                    // Escape MySQL placeholders
-                    $this->qv('%' . strtr($value, [
-                        '_' => '\\_',
-                        '%' => '\\%'
-                    ]) . '%'),
+                    $this->qv(static::wrapLikeValue($value))
                 ]);
 
             // Skip Mongo specific stuff
@@ -190,6 +186,7 @@ class MysqlQueryBuilder extends QueryBuilder
     public function buildCreateTable(string $tableName): string
     {
         return <<<SQL
+
             CREATE TABLE IF NOT EXISTS {$this->qi($tableName)} (
                 "id"       INT  NOT NULL AUTO_INCREMENT,
                 "document" JSON NOT NULL,

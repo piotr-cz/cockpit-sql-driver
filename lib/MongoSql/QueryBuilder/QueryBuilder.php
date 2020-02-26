@@ -283,6 +283,20 @@ abstract class QueryBuilder
     abstract public function qi(string $identifier): string;
 
     /**
+     * Quote and escape LIKE value
+     *
+     * @param string $value
+     * @return string
+     */
+    public static function wrapLikeValue(string $value): string
+    {
+        return sprintf('%%%s%%', strtr($value, [
+            '_' => '\\_',
+            '%' => '\\%',
+        ]));
+    }
+
+    /**
      * Encode value helper
      *
      * @param mixed $value

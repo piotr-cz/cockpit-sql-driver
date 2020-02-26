@@ -156,11 +156,7 @@ class PgsqlQueryBuilder extends QueryBuilder
 
                 return vsprintf('(%s)::text LIKE %s', [
                     $pathTextSelector,
-                    // Escape placeholders
-                    $this->qv('%' . strtr($value, [
-                        '_' => '\\_',
-                        '%' => '\\%',
-                    ]) . '%'),
+                    $this->qv(static::wrapLikeValue($value))
                 ]);
 
             // Skip Mongo specific stuff
