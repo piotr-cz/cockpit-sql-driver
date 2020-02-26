@@ -206,6 +206,6 @@ SQL;
      */
     public function qi(string $identifier): string
     {
-        return '`' . str_replace('`', '``', $identifier) . '`';
+        return sprintf('`%s`', str_replace('`', '``', $identifier));
     }
 }
