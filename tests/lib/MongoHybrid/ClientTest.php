@@ -450,6 +450,10 @@ class ClientTest extends TestCase
                 'Failed $has'
             );
             // Ignore on not implemented
+        } catch (InvalidArgumentException $exception) {
+            if ($exception->getCode() !== 1) {
+                throw $exception;
+            }
         } catch (\MongoDB\Driver\Exception\ServerException $mongoException) {
             if ($mongoException->getMessage() !== 'unknown operator: $has') {
                 throw $mongoException;
@@ -458,16 +462,22 @@ class ClientTest extends TestCase
 
 
         // Assert $all func
-        $items = static::$storage->find($this->mockCollectionId, [
-            'filter' => [
-                'array' => ['$all' => ['foo', 'bar']],
-            ]
-        ]);
+        try {
+            $items = static::$storage->find($this->mockCollectionId, [
+                'filter' => [
+                    'array' => ['$all' => ['bar', 'foo']],
+                ]
+            ]);
 
-        $this->assertTrue(
-            count($items) && $items[0]['array'] == ['foo', 'bar'],
-            'Failed $all'
-        );
+            $this->assertTrue(
+                count($items) && $items[0]['array'] == ['foo', 'bar'],
+                'Failed $all'
+            );
+        } catch (InvalidArgumentException $exception) {
+            if ($exception->getCode() !== 1) {
+                throw $exception;
+            }
+        }
 
 
         // Assert $preg/ $match/ $regex func
