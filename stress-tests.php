@@ -93,6 +93,8 @@ foreach ($collectionNames as $collectionName) {
         continue;
     }
 
+    echo sprintf('- %s', $collectionName) . PHP_EOL;
+
     // Common properties are: _id|_created|_modified|_by|_mby|_o
     for ($i = 0; $i < $options['repeatNo']; $i++) {
         // Sort descending by created at
