@@ -53,12 +53,12 @@ if ($options['collectionName']) {
 if (!$options['configFile']) {
     echo 'Info: Using default config' . PHP_EOL;
 } else {
-    echo sprintf('Info: Using custom config `%s`' . PHP_EOL, $options['configFile']);
+    echo sprintf('Info: Using custom config `%s`', $options['configFile']) . PHP_EOL;
     // Validate that path exists
     $configPath = __DIR__ . '/' . $options['configFile'];
 
     if (!is_file($configPath)) {
-        exit(sprintf('Error: Config does not exist at path `%s`' . PHP_EOL, $configPath));
+        exit(sprintf('Error: Config does not exist at path `%s`', $configPath) . PHP_EOL);
     }
 
     define('COCKPIT_CONFIG_PATH', $configPath);
@@ -89,7 +89,7 @@ $collectionNames = $options['collectionName']
 // Run tasks
 foreach ($collectionNames as $collectionName) {
     if (!$cockpit->module('collections')->exists($collectionName)) {
-        echo sprintf('Warning: Collection `%s` does not exist' . PHP_EOL, $collectionName);
+        echo sprintf('Warning: Collection `%s` does not exist', $collectionName) . PHP_EOL;
         continue;
     }
 
