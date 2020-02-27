@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Cockpit native MongoDB driver
+-->
 <phpunit
     bootstrap="../bootstrap.php"
     colors="true"
     cacheResult="false"
 >
     <php>
-        <!-- Cockpit doesn't work with :memory:, see https://github.com/agentejo/cockpit/pull/1173 -->
-        <var name="db_server" value="mongolite://:memory:" />
+        <var name="db_server" value="mongodb://travis:test@localhost:27017" />
         <var name="db_options_db" value="cockpitdb" />
     </php>
     <testsuites>

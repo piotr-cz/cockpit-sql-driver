@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    SQL MariaDB Driver
+-->
 <phpunit
     bootstrap="../bootstrap.php"
     colors="true"

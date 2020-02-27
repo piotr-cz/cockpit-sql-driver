@@ -30,28 +30,28 @@ addons:
 
 # Create build matrix exporting DB variable
 env:
-  - DB=mysql
-  - DB=pgsql
-  # - DB=mariadb
-  # - DB=sqlite
-  # - DB=mongodb
+  - DRIVER=mysql
+  - DRIVER=pgsql
+  # - DRIVER=mariadb
+  # - DRIVER=cockpit-sqlite
+  # - DRIVER=cockpit-mongodb
 
 before_script:
   - phpenv config-rm xdebug.ini
   - composer install --no-interaction --ignore-platform-reqs
-  - sh -c "if [ '$DB' = 'mysql' ] || [ '$DB' = 'mariadb' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS cockpitdb;'; fi"
+  - sh -c "if [ '$DRIVER' = 'mysql' ] || [ '$DRIVER' = 'mariadb' ]; then mysql -e 'CREATE DATABASE IF NOT EXISTS cockpitdb;'; fi"
   # To fix issue https://travis-ci.community/t/mariadb-10-1-fails-to-install-on-xenial/3151
-  - sh -c "if [ '$DB' = 'mariadb' ]; then mysql -u root -e 'CREATE USER IF NOT EXISTS travis@localhost; GRANT ALL ON *.* TO travis@localhost;'; fi"
-  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS cockpitdb;' -U postgres; fi"
-  - sh -c "if [ '$DB' = 'pgsql' ]; then psql -c 'CREATE DATABASE cockpitdb;' -U postgres; fi"
-  # - sh -c "if [ '$db' = 'mongodb' ]; then pecl install mongodb; fi"
-  # - sh -c "if [ '$DB' = 'mongodb']; then mongo 'cockpitdb' --eval 'db.createUser({user:\"travis\",pwd:\"test\",roles:[\"readWrite\"]});'; fi"
+  - sh -c "if [ '$DRIVER' = 'mariadb' ]; then mysql -u root -e 'CREATE USER IF NOT EXISTS travis@localhost; GRANT ALL ON *.* TO travis@localhost;'; fi"
+  - sh -c "if [ '$DRIVER' = 'pgsql' ]; then psql -c 'DROP DATABASE IF EXISTS cockpitdb;' -U postgres; fi"
+  - sh -c "if [ '$DRIVER' = 'pgsql' ]; then psql -c 'CREATE DATABASE cockpitdb;' -U postgres; fi"
+  # - sh -c "if [ '$DRIVER' = 'cockpit-mongodb' ]; then pecl install mongodb; fi"
+  # - sh -c "if [ '$DRIVER' = 'cockpit-mongodb']; then mongo 'cockpitdb' --eval 'db.createUser({user:\"travis\",pwd:\"test\",roles:[\"readWrite\"]});'; fi"
 
-# Run PHPUnit with current DB
+# Run PHPUnit with current driver
 script:
-  - vendor/bin/phpunit --configuration tests/travis/$DB.phpunit.xml
+  - vendor/bin/phpunit --configuration tests/travis/$DRIVER.phpunit.xml
   # - vendor/bin/php-cs-fixer fix -v --diff --dry-run
 
 allow_failures:
   # - php: 7.5snapshot
-  # - env: DB=sqlite
+  # - env: DRIVER=cockpit-sqlite
