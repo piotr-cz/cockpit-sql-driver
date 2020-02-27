@@ -80,7 +80,7 @@ return [
         'server' => 'sqldriver',
         # Connection options
         'options' => [
-            'connection' => 'mysql'          # One of 'mysql'|'pgsql'
+            'connection' => 'mysql',         # One of 'mysql'|'pgsql'
             'host'       => 'localhost',     # Optional, defaults to 'localhost'
             'port'       => 3306,            # Optional, defaults to 3306 (MySQL) or 5432 (PostgreSQL)
             'dbname'     => 'DATABASE_NAME',
