@@ -116,7 +116,8 @@ SQL;
         try {
             /* Query without parameters (via PDO::prepare) to avoid problems with reserved characters (? and :)
              * driver option PDO::ATTR_EMULATE_PREPARES must be set to true - see {@link https://bugs.php.net/bug.php?id=74220}
-             * This is fixed in php 7.4-beta.1 {@link https://wiki.php.net/rfc/pdo_escape_placeholders}
+             * This is fixed in php 7.4 {@link https://wiki.php.net/rfc/pdo_escape_placeholders},
+             * {@link https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.pdo}
              */
 
             // $stmt = $this->connection->prepare($sql, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_COLUMN]);
