@@ -162,7 +162,7 @@ This means that there is no guarantee that this addon will work in future versio
 
 #### Work differently
 
-- callable
+- _callable_
 
   [Unlike SQLite](https://www.php.net/manual/en/pdo.sqlitecreatefunction.php), PDO MySQL and PostgreSQL drivers don't have support for User Defined Functions in PHP language - so callable is evaluated on every result fetch.
   If you have lots of documents in collection and care about performance use other filters.
@@ -229,13 +229,6 @@ Manually create file `COCKPIT_STORAGE_FOLDER/tmp/webhooks.cache.php` with conten
 ```php
 <?php return [];
 ```
-
-
-### Composer installation fails _(Plugin installation failed, rolling back)_
-
-Related to [VirtualBox issue](https://github.com/laravel/homestead/issues/1240)
-
-Use composer `--no-plugins` option in install/ require
 
 
 ## Copyright and license
