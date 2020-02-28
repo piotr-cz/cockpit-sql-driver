@@ -825,8 +825,8 @@ class ClientTest extends TestCase
      */
     public function testRemoveField()
     {
-        if (!static::$storage->driverHasMethod('renameField')) {
-            $this->markTestSkipped('Driver::renameField method not implemented');
+        if (!static::$storage->driverHasMethod('removeField')) {
+            $this->markTestSkipped('Driver::removeField method not implemented');
             return;
         }
 
@@ -846,8 +846,8 @@ class ClientTest extends TestCase
      */
     public function testRenameField()
     {
-        if (!static::$storage->driverHasMethod('removeField')) {
-            $this->markTestSkipped('Driver::removeField method not implemented');
+        if (!static::$storage->driverHasMethod('renameField')) {
+            $this->markTestSkipped('Driver::renameField method not implemented');
             return;
         }
 
