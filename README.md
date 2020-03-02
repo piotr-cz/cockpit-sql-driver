@@ -3,7 +3,7 @@
 [![Latest Version](https://img.shields.io/packagist/v/piotr-cz/cockpit-sql-driver?style=flat-square&sort=semver)](https://packagist.org/packages/piotr-cz/cockpit-sql-driver)
 [![Build status](https://img.shields.io/travis/piotr-cz/cockpit-sql-driver?style=flat-square)](https://travis-ci.org/piotr-cz/cockpit-sql-driver)
 
-This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default Mongo/ SQLite.
+This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default MongoDB/ SQLite.
 
 
 ## Requirements
