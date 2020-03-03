@@ -67,6 +67,24 @@ abstract class QueryBuilder
     abstract public function createPathSelector(string $fieldName): string;
 
     /**
+     * Split JSON path by dot end wrap non-numeric segments in double quotes.
+     * Doesn't support dot inside field name as MongoDB doesn't either
+     * To do so, see {@link https://stackoverflow.com/questions/2202435/}
+     * @param string $path
+     * @return array
+     */
+    protected static function splitPath(string $path): array
+    {
+        $segments = explode('.', $path);
+
+        return array_map(function (string $segment): string {
+            return is_numeric($segment)
+                ? $segment
+                : sprintf('"%s"', str_replace('"', '\\"', $segment));
+        }, $segments);
+    }
+
+    /**
      * Build ORDER BY subquery
      *
      * @param array|null $sorts

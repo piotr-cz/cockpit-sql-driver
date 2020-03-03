@@ -187,6 +187,20 @@ class ClientTest extends TestCase
         $this->assertTrue(count($items) === 1, 'Failed to find one item via filter: ' . var_export($items->toArray(), true));
         $this->assertTrue($items[0]['content'] === 'Etiam tempor');
 
+
+        // Test complex json syntax
+        $items = static::$storage->find($this->mockCollectionId, [
+            'filter' => [
+                'array.1' => 'bar'
+            ]
+        ]);
+
+        $this->assertTrue(
+            count($items) === 1 && $items[0]['content'] === 'Etiam tempor',
+            'Failed to find one item via complex filter'
+        );
+
+
         // Test iterator
         if (static::$storage->type === 'mongosql') {
             $itemsIterator = static::$storage->find($this->mockCollectionId, [

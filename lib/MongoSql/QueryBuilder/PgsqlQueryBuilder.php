@@ -20,9 +20,12 @@ class PgsqlQueryBuilder extends QueryBuilder
      */
     public function createPathSelector(string $fieldName, bool $asText = true): string
     {
+        $segments = static::splitPath($fieldName);
+        $pgsqlPath = sprintf('{%s}', implode(',', $segments));
+
         return vsprintf('"document" %s %s', [
             $asText ? '#>>' : '#>',
-            $this->qv('{' . str_replace('.', ',', $fieldName) . '}')
+            $this->qv($pgsqlPath)
         ]);
     }
 

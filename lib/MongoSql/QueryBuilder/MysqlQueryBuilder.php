@@ -16,15 +16,25 @@ class MysqlQueryBuilder extends QueryBuilder
 {
     /**
      * @inheritdoc
+     * @see {@link https://dev.mysql.com/doc/refman/5.7/en/json.html#json-paths}
      */
     public function createPathSelector(string $fieldName): string
     {
+        $segments = static::splitPath($fieldName);
+        $mysqlPath = array_reduce($segments, function (string $carry, string $item): string {
+            $pattern = is_numeric($item)
+                ? '%s[%d]'
+                : '%s.%s';
+
+            return sprintf($pattern, $carry, $item);
+        }, '$');
+
         // MySQL 5.7.8 & MariaDB 10.2.3
         // {@link https://jira.mariadb.org/browse/MDEV-13594}
-        return sprintf('JSON_UNQUOTE(JSON_EXTRACT(`document`, %s))', $this->qv('$.' . $fieldName));
+        return sprintf('JSON_UNQUOTE(JSON_EXTRACT(`document`, %s))', $this->qv($mysqlPath));
 
         // MySQL 5.7.9
-        // return sprintf('`document` ->> %s', $this->qv('$.' . $fieldName));
+        // return sprintf('`document` ->> %s', $this->qv($mysqlPath));
     }
 
     /**
