@@ -27,6 +27,7 @@ class ClientTest extends TestCase
             'content' => 'Lorem ipsum',
             'array' => ['foo'],
             'utf8' => '🍎',
+            '32"' => 'false',
             '_o' => 1,
             '_created' =>  1546297200.000,
             '_modified' => 1546297200.000,
@@ -35,6 +36,7 @@ class ClientTest extends TestCase
             'content' => 'Etiam tempor',
             'array' => ['foo', 'bar'],
             'utf8' => '🍌',
+            '32"' => 'true',
             '_o' => 2,
             '_created' =>  1546297200.000,
             '_modified' => 1546297200.000,
@@ -198,6 +200,19 @@ class ClientTest extends TestCase
         $this->assertTrue(
             count($items) === 1 && $items[0]['content'] === 'Etiam tempor',
             'Failed to find one item via complex filter'
+        );
+
+
+        // Test quotes in json path
+        $items = static::$storage->find($this->mockCollectionId, [
+            'filter' => [
+                '32"' => 'true'
+            ]
+        ]);
+
+        $this->assertTrue(
+            count($items) === 1 && $items[0]['content'] === 'Etiam tempor',
+            'Failed to find one item with double quotes in path'
         );
 
 

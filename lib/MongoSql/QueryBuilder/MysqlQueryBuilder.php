@@ -11,6 +11,7 @@ use MongoSql\QueryBuilder\QueryBuilder;
 /**
  * MySQL query builder
  * @see {@link https://dev.mysql.com/doc/refman/5.7/en/json-function-reference.html}
+ * Values quoted by ', escaped by \'
  */
 class MysqlQueryBuilder extends QueryBuilder
 {

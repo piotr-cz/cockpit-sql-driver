@@ -11,6 +11,7 @@ use MongoSql\QueryBuilder\QueryBuilder;
 /**
  * PostgreSQL Query builder
  * @see {@link https://www.postgresql.org/docs/9.4/functions-json.html}
+ * Values quoted by ', escaped by ''
  */
 class PgsqlQueryBuilder extends QueryBuilder
 {
