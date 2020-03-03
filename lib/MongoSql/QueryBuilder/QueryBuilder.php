@@ -185,13 +185,13 @@ abstract class QueryBuilder
                     if (is_array($value) && array_keys($value) === ['$not']) {
                         $whereSegments[] = 'NOT ' . is_array($value['$not'])
                             ? $this->buildWhereSegments([$key => $value['$not']])
-                            : $this->buildWhereSegmentsGroup($key, ['$regex' => $value['$not']]);
+                            : $this->buildWhereSegmentsGroup((string) $key, ['$regex' => $value['$not']]);
                         break;
                     }
 
                     // Value
                     $whereSegments[] = $this->buildWhereSegmentsGroup(
-                        $key,
+                        (string) $key,
                         is_array($value) ? $value : ['$eq' => $value]
                     );
                     break;
