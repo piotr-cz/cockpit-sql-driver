@@ -43,6 +43,11 @@ class PgsqlQueryBuilder extends QueryBuilder
         $pathTextSelector = $this->createPathSelector($fieldName);
         $pathObjectSelector = $this->createPathSelector($fieldName, false);
 
+        // See https://stackoverflow.com/questions/19422640/how-to-query-for-null-values-in-json-field-type-postgresql
+        if ($value === null) {
+            $pathTextSelector = sprintf('(%s)::text', $pathObjectSelector);
+        }
+
         switch ($func) {
             case '$eq':
                 return vsprintf('%s = %s', [

@@ -28,6 +28,7 @@ class ClientTest extends TestCase
             'array' => ['foo'],
             'utf8' => '🍎',
             '32"' => 'false',
+            'types' => [],
             '_o' => 1,
             '_created' =>  1546297200.000,
             '_modified' => 1546297200.000,
@@ -37,6 +38,7 @@ class ClientTest extends TestCase
             'array' => ['foo', 'bar'],
             'utf8' => '🍌',
             '32"' => 'true',
+            'types' => [null, true, 1, 'text'],
             '_o' => 2,
             '_created' =>  1546297200.000,
             '_modified' => 1546297200.000,
@@ -213,6 +215,47 @@ class ClientTest extends TestCase
         $this->assertTrue(
             count($items) === 1 && $items[0]['content'] === 'Etiam tempor',
             'Failed to find one item with double quotes in path'
+        );
+
+        /*
+        // Filter by null (doesn't work with Mongolite both SQLite and MongoDB, no idea why)
+        // Problematic on PostreSQL
+        $items = static::$storage->find($this->mockCollectionId, [
+            'filter' => [
+                'type' => null
+            ]
+        ]);
+
+        $this->assertTrue(
+            count($items) === 1 && $items[0]['content'] === 'Etiam tempor',
+            'Failed to find one item with null as value'
+        );
+        // */
+
+
+        // Filter by boolean
+        $items = static::$storage->find($this->mockCollectionId, [
+            'filter' => [
+                'types.1' => true
+            ]
+        ]);
+
+        $this->assertTrue(
+            count($items) === 1 && $items[0]['content'] === 'Etiam tempor',
+            'Failed to find one item with boolean as value'
+        );
+
+
+        // Filter by number
+        $items = static::$storage->find($this->mockCollectionId, [
+            'filter' => [
+                'types.2' => 1
+            ]
+        ]);
+
+        $this->assertTrue(
+            count($items) === 1 && $items[0]['content'] === 'Etiam tempor',
+            'Failed to find one item with number as value'
         );
 
 

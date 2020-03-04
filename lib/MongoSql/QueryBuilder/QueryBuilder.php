@@ -279,6 +279,10 @@ abstract class QueryBuilder
      */
     public function qv($value): string
     {
+        if (!is_string($value)) {
+            $value = static::jsonEncode($value);
+        }
+
         return ($this->connectionQuote)((string) $value);
     }
 
