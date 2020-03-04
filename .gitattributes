@@ -11,6 +11,7 @@
 # Tests
 /tests export-ignore
 /phpunit.xml.dist export-ignore
+/stress-tests.php export-ignore
 
 # Meta
 /CHANGELOG.md export-ignore
