@@ -14,12 +14,9 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 - Enabled PHP extensions: *pdo*, *pdo_mysql*/ *pdo_pgsql*
 
 
-### Compatibility table
+### Compatibility
 
- Cockpit version | Addon version
----------------- | -------------
- `<=0.10.0`      | [1.0.0-beta.2](https://github.com/piotr-cz/cockpit-sql-driver/releases/tag/v1.0.0-beta.2)
- `<=0.9.2`       | [1.0.0-beta.1](https://github.com/piotr-cz/cockpit-sql-driver/releases/tag/v1.0.0-beta.1)
+To run Cockpit `0.9.2+` at least version `1.0.0-beta.2+` is required.
 
 
 ## Installation
