@@ -85,22 +85,23 @@ class Cursor implements IteratorAggregate, CursorInterface
     }
 
     /**
-     * Get Traversable
-     * IteratorAggregate implementation
+     * Build SQL query
      *
-     * @see {@link https://www.php.net/manual/en/class.generator.php}
-     *
-     * @return \Traversable
-     * @throws \PDOException
+     * @return string
      */
-    public function getIterator(): Traversable
+    public function getSql(): string
     {
-        $sqlWhere = !is_callable($this->filter) ? $this->queryBuilder->buildWhere($this->filter) : null;
-        $sqlOrderBy = $this->queryBuilder->buildOrderBy($this->options['sort']);
-        $sqlLimit = !is_callable($this->filter) ? $this->queryBuilder->buildLimit($this->options['limit'], $this->options['skip']) : null;
+        $sqlWhere = !is_callable($this->filter)
+            ? $this->queryBuilder->buildWhere($this->filter)
+            : null;
 
-        // Build query
-        $sql = <<<SQL
+        $sqlOrderBy = $this->queryBuilder->buildOrderBy($this->options['sort']);
+
+        $sqlLimit = !is_callable($this->filter)
+            ? $this->queryBuilder->buildLimit($this->options['limit'], $this->options['skip'])
+            : null;
+
+        return <<<SQL
 
             SELECT
                 "document"
@@ -112,6 +113,20 @@ class Cursor implements IteratorAggregate, CursorInterface
             {$sqlOrderBy}
             {$sqlLimit}
 SQL;
+    }
+
+    /**
+     * Get Traversable
+     * IteratorAggregate implementation
+     *
+     * @see {@link https://www.php.net/manual/en/class.generator.php}
+     *
+     * @return \Traversable
+     * @throws \PDOException
+     */
+    public function getIterator(): Traversable
+    {
+        $sql = $this->getSql();
 
         try {
             /* Query without parameters (via PDO::prepare) to avoid problems with reserved characters (? and :)
