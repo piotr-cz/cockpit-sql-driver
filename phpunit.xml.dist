@@ -4,6 +4,7 @@
     colors="true"
     cacheResult="false"
 >
+    <!-- Database config -->
     <php>
         <var name="db_server" value="sqldriver" />
         <var name="db_options_connection" value="mysql" />
