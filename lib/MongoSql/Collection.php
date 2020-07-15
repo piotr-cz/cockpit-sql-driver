@@ -152,7 +152,7 @@ class Collection implements CollectionInterface
     /**
      * @inheritdoc
      */
-    public function insertMany(array &$documents): int
+    public function insertMany(array &$documents): bool
     {
         $stmt = $this->connection->prepare(
             <<<SQL
@@ -172,7 +172,7 @@ SQL
             $stmt->execute([':data' => QueryBuilder::jsonEncode($document)]);
         }
 
-        return count($documents);
+        return true;
     }
 
     /**

@@ -68,10 +68,10 @@ interface DriverInterface
     public function remove(string $collectionId, $filter): bool;
 
     /**
-     * Insert new document into collection
+     * Insert new document or multiple documents into collection
      *
      * @param string $collectionId - Full collection id
-     * @param array &$doc
+     * @param array &$doc - Document or array of documents to insert
      * @return bool
      */
     public function insert(string $collectionId, array &$doc): bool;

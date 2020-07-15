@@ -27,9 +27,9 @@ interface CollectionInterface
      * Insert many documents
      *
      * @param array $documents
-     * @return count of inserted documents for arrays
+     * @return bool
      */
-    public function insertMany(array &$documents): int;
+    public function insertMany(array &$documents): bool;
 
     /**
      * Not used in Cockpit

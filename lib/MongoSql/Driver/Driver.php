@@ -235,6 +235,12 @@ abstract class Driver implements DriverInterface
      */
     public function insert(string $collectionId, array &$doc): bool
     {
+        // Detect sequential array of documents
+        // See MongoHybrid\Mongo::insert
+        if (isset($doc[0])) {
+            return $this->getCollection($collectionId)->insertMany($doc);
+        }
+
         return $this->getCollection($collectionId)->insertOne($doc);
     }
 
