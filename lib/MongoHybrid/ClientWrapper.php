@@ -30,6 +30,11 @@ class ClientWrapper extends MongoHybridClient
             return;
         }
 
+        // Validate connection
+        if (empty($options['connection'])) {
+            throw new DriverException(sprintf('SQL driver not set up'));
+        }
+
         // Resolve drivers' FQCN
         $fqcn = sprintf('MongoSql\Driver\%sDriver', ucfirst($options['connection']));
 
