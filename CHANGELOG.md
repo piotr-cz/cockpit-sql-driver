@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Increase default addon boostrap priority
 
+## Changed
+- Change interfaces implementations
+
 ## [1.0.0-rc.2] - 2020-07-15
 ### Fixed
 - Use Driver::insert for one or many documents, change method signatures
