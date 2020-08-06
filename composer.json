@@ -14,14 +14,14 @@
     ],
     "require": {
         "php": ">= 7.1",
-        "ext-pdo": "*",
         "ext-json": "*",
+        "ext-pdo": "*",
         "composer/installers": "^1.2"
     },
     "require-dev": {
         "aheinze/cockpit": "0.*",
-        "phpunit/phpunit": "^7.5",
-        "friendsofphp/php-cs-fixer": "^2.16.1"
+        "friendsofphp/php-cs-fixer": "^2.16.1",
+        "phpunit/phpunit": "^7.5"
     },
     "suggest": {
         "ext-pdo_mysql": "For MySQL support",
@@ -43,7 +43,8 @@
         "platform": {
             "php": "7.1.30",
             "ext-mongodb": "1.5.0"
-        }
+        },
+        "sort-packages": true
     },
     "extra": {
         "installer-name": "SqlDriver"
