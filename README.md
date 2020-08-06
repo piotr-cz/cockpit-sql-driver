@@ -84,6 +84,7 @@ return [
             'username'   => 'USER',
             'password'   => 'PASSWORD',
             'charset'    => 'UTF8'           # Optional, defaults to 'UTF8'
+            'bootstrapPriority' => 999       # Optional, defaults to 999
         ],
         # Connection specific options
         # General: https://www.php.net/manual/en/pdo.setattribute.php

@@ -42,4 +42,4 @@ $app->on('cockpit.bootstrap', function () use ($dbConfig): ?bool {
     });
 
     return true;
-}, $dbConfig['options']['bootstrapPriority'] ?? 1);
+}, $dbConfig['options']['bootstrapPriority'] ?? 999);
