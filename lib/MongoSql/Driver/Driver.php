@@ -8,10 +8,7 @@ use PDOException;
 
 use MongoHybrid\ResultSet;
 
-use MongoHybrid\Contracts\ {
-    CollectionInterface,
-    DriverInterface
-};
+use MongoHybrid\Contracts\DriverInterface;
 
 use MongoSql\ {
     DriverException,
@@ -135,7 +132,7 @@ abstract class Driver implements DriverInterface
     /**
      * @inheritdoc
      */
-    public function getCollection(string $name, ?string $db = null): CollectionInterface
+    public function getCollection(string $name, ?string $db = null): Collection
     {
         $collectionId = $db
             ? $db . '/' . $name
@@ -247,7 +244,7 @@ abstract class Driver implements DriverInterface
     /**
      * @inheritdoc
      */
-    public function update(string $collectionId, $filter = [], array $data): bool
+    public function update(string $collectionId, $filter, array $data): bool
     {
         return $this->getCollection($collectionId)->updateMany($filter, $data);
     }
@@ -255,7 +252,7 @@ abstract class Driver implements DriverInterface
     /**
      * @inheritdoc
      */
-    public function remove(string $collectionId, $filter = []): bool
+    public function remove(string $collectionId, $filter): bool
     {
         return $this->getCollection($collectionId)->deleteMany($filter);
     }

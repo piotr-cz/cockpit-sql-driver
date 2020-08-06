@@ -207,7 +207,7 @@ SQL
      * @param array [$options]
      * @return bool
      */
-    public function updateMany($filter, array $update, array $options = []): bool
+    public function updateMany($filter = [], array $update, array $options = []): bool
     {
         $stmt = $this->connection->prepare(
             <<<SQL
@@ -245,7 +245,7 @@ SQL
      * @param array $update
      * @return bool
      */
-    public function updateOne($filter, array $update): bool
+    public function updateOne($filter = [], array $update): bool
     {
         return $this->updateMany($filter, $update, [
             'limit' => 1
@@ -336,7 +336,7 @@ SQL
 
     /**
      * Count documents
-     * @deprecated in MongoDb 1.4 in favor of countDocuments
+     * @note Deprecated in MongoDb 1.4 in favor of countDocuments
      */
     public function count($filter = []): int
     {
