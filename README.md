@@ -8,7 +8,7 @@ This addon allows to use MySQL/ MariaDB/ PostgreSQL databases instead of default
 
 ## Requirements
 
-- Cockpit CMS (next or legacy)
+- Cockpit CMS (next, tested up to v0.11.0 or legacy)
 - MySQL 5.7.9/ MariaDB 10.2.6/ PostgreSQL 9.4
 - PHP 7.1
 - Enabled PHP extensions: *pdo*, *pdo_mysql*/ *pdo_pgsql*

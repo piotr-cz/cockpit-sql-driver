@@ -8,7 +8,10 @@ use PDOException;
 
 use MongoHybrid\ResultSet;
 
-use MongoHybrid\Contracts\DriverInterface;
+use MongoHybrid\Contracts\ {
+    DriverInterface,
+    CollectionInterface
+};
 
 use MongoSql\ {
     DriverException,
@@ -136,8 +139,10 @@ abstract class Driver implements DriverInterface
 
     /**
      * @inheritdoc
+     * Note: Should type hint return to \MongoSql\Collection, but this requires PHP 7.4+
+     *       https://wiki.php.net/rfc/covariant-returns-and-contravariant-parameters
      */
-    public function getCollection(string $name, ?string $db = null): Collection
+    public function getCollection(string $name, string $db = null): CollectionInterface
     {
         $collectionId = $db
             ? $db . '/' . $name
