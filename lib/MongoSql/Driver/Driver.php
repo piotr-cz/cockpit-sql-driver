@@ -132,7 +132,7 @@ abstract class Driver implements DriverInterface
     /**
      * @inheritdoc
      */
-    public function getCollection(string $name, ?string $db = null): Collection
+    public function getCollection(string $name, string $db = null): Collection
     {
         $collectionId = $db
             ? $db . '/' . $name
