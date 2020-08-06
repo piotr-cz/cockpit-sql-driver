@@ -42,11 +42,14 @@ abstract class Driver implements DriverInterface
     /** @type \PDO - Database connection */
     protected $connection;
 
-    /** @var array - Collections cache */
+    /** @var \MongoSql\Collection[] - Collections cache */
     protected $collections = [];
 
     /** @var \MongoSql\QueryBuilder\QueryBuilder */
     protected $queryBuilder;
+
+    /** @var string - Collections table prefix */
+    protected $tablePrefix = '';
 
     /**
      * Constructor
@@ -56,9 +59,10 @@ abstract class Driver implements DriverInterface
      *   @var string [$host]
      *   @var int [$port]
      *   @var string $dbname
-     *   @var string [$charset]
      *   @var string $username
      *   @var string $password
+     *   @var string [$charset]
+     *   @var string [$tablePrefix]
      * }
      * @param array [$driverOptions]
      * @throws \MongoSql\DriverException
@@ -72,6 +76,7 @@ abstract class Driver implements DriverInterface
         }
 
         $this->queryBuilder = QueryBuilder::createFromPdo($this->connection);
+        $this->tablePrefix = $options['tablePrefix'] ?? '';
 
         $this->assertIsDbSupported();
     }
@@ -142,7 +147,7 @@ abstract class Driver implements DriverInterface
             $this->collections[$collectionId] = new Collection(
                 $this->connection,
                 $this->queryBuilder,
-                $collectionId,
+                $this->tablePrefix . $collectionId,
                 [$this, 'handleCollectionDrop']
             );
         }
@@ -161,11 +166,11 @@ abstract class Driver implements DriverInterface
     /**
      * Handle collection drop
      *
-     * @param string $collectionId
+     * @param string $collectionName - Table prefix + Collection id
      */
-    public function handleCollectionDrop(string $collectionId): void
+    public function handleCollectionDrop(string $collectionName): void
     {
-        unset($this->collections[$collectionId]);
+        unset($this->collections[$collectionName]);
     }
 
     /**
