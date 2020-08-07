@@ -145,10 +145,24 @@ class ClientTest extends TestCase
     {
         static::$storage->dropCollection($this->mockCollectionId);
 
-        /* When using mongolite driver There is a bug in Cockpit 0.9.2 resolved in https://github.com/agentejo/cockpit/pull/1165
-         * that fails to use collection after it's been dropped
-         */
-        $this->assertTrue(static::$storage->count($this->mockCollectionId) === 0);
+        $collectionItemsCount = null;
+
+        try {
+            /* When using mongolite driver There is a bug in Cockpit 0.9.2 resolved in https://github.com/agentejo/cockpit/pull/1165
+             * that fails to use collection after it's been dropped
+             */
+            $collectionItemsCount = static::$storage->count($this->mockCollectionId);
+        } catch (\PDOException $pdoException) {
+            // Count throws an exception when table does not exist
+            // `"SQLSTATE[42S02]: Base table or view not found: 1146 Table 'xxx' doesn't exist`
+            if (strpos($pdoException->getMessage(), 'SQLSTATE[42S02]') === 0) {
+                $collectionItemsCount = 0;
+            } else {
+                throw $pdoException;
+            }
+        }
+
+        $this->assertTrue($collectionItemsCount === 0);
     }
 
     /**
