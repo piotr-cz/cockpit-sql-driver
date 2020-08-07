@@ -84,7 +84,7 @@ return [
             'username'   => 'USER',
             'password'   => 'PASSWORD',
             'charset'    => 'UTF8',          # Optional, defaults to 'UTF8'
-            'tablePrefix' => 'cockpit/',     # Optional, database tables prefix
+            'tablePrefix' => '',             # Optional, database tables prefix (ie. 'cockpit_')
             'bootstrapPriority' => 999,      # Optional, defaults to 999
         ],
         # Connection specific options
