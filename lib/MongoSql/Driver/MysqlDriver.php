@@ -71,7 +71,7 @@ class MysqlDriver extends Driver
         // See https://mariadb.atlassian.net/browse/MDEV-4088
         // Note that query `SELECT VERSION()` won't return MySQL copat prefix
         if (strpos($currentVersion, '-MariaDB') !== false) {
-            [$mySqlCompatVersion, $mariaDbVersion] = explode('-', $currentVersion, 2);
+            [$mariaDbVersion, $mySqlCompatVersion] = explode('-', $currentVersion, 2);
 
             $currentVersion = $mariaDbVersion;
             $minVersion = static::DB_MIN_SERVER_VERSION_MARIADB;
