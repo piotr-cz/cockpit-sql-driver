@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.0.0] - 2021-04-27
 ### Fixed
 - PHP 8.0 compatibility (#fdc1f5c)
 - Fix MariaDB version detection ([#8](https://github.com/piotr-cz/cockpit-sql-driver/pull/8))
@@ -37,7 +39,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
-[Unreleased]: https://github.com/piotr-cz/cockpit-sql-driver/compare/v1.0.0-rc.3...HEAD
+[Unreleased]: https://github.com/piotr-cz/cockpit-sql-driver/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/piotr-cz/cockpit-sql-driver/compare/v1.0.0-rc.3...v1.0.0
 [1.0.0-rc.3]: https://github.com/piotr-cz/cockpit-sql-driver/compare/v1.0.0-rc.2...v1.0.0-rc.3
 [1.0.0-rc.2]: https://github.com/piotr-cz/cockpit-sql-driver/compare/v1.0.0-rc.1...v1.0.0-rc.2
 [1.0.0-rc.1]: https://github.com/piotr-cz/cockpit-sql-driver/compare/v1.0.0-beta.2...v1.0.0-rc.1
