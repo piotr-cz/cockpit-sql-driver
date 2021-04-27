@@ -128,7 +128,7 @@ class Collection implements CollectionInterface
      * in favor of
      * `$collection->find([], ['limit' => 1])`
      */
-    public function find($filter = [], array $options = []): CursorInterface
+    public function find($filter, array $options = []): CursorInterface
     {
         return new Cursor($this->connection, $this->queryBuilder, $this->collectionName, $filter, $options);
     }
@@ -140,7 +140,7 @@ class Collection implements CollectionInterface
      * @param array [$options]
      * @return array|null
      */
-    public function findOne($filter = [], array $options = []): ?array
+    public function findOne($filter, array $options = []): ?array
     {
         $results = $this->find($filter, array_merge($options, [
             'limit' => 1
@@ -207,7 +207,7 @@ SQL
      * @param array [$options]
      * @return bool
      */
-    public function updateMany($filter = [], array $update, array $options = []): bool
+    public function updateMany($filter, array $update, array $options = []): bool
     {
         $stmt = $this->connection->prepare(
             <<<SQL
@@ -245,7 +245,7 @@ SQL
      * @param array $update
      * @return bool
      */
-    public function updateOne($filter = [], array $update): bool
+    public function updateOne($filter, array $update): bool
     {
         return $this->updateMany($filter, $update, [
             'limit' => 1
@@ -275,7 +275,7 @@ SQL
 SQL
         );
 
-        $stmt->execute([':data'  => QueryBuilder::jsonEncode($replace)]);
+        $stmt->execute([':data' => QueryBuilder::jsonEncode($replace)]);
 
         return true;
     }
