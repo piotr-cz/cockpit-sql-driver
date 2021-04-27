@@ -54,7 +54,7 @@ class Cursor implements IteratorAggregate, CursorInterface
      * @param \PDO $connection
      * @param string $collectionName
      * @param array|callable $filter
-     * @param array $options {
+     * @param array [$options] {
      *   @var array [$sort]
      *   @var int [$limit]
      *   @var int [$skip]
@@ -168,7 +168,7 @@ SQL;
     /**
      * Compile projection
      *
-     * @param array|null $projection
+     * @param array [$projection]
      * @return array
      */
     protected static function compileProjection(array $projection = null): ?array

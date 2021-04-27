@@ -17,7 +17,7 @@ class PgsqlQueryBuilder extends QueryBuilder
 {
     /**
      * @inheritdoc
-     * @param bool $asObject - Get JSON object at as text
+     * @param bool [$asObject] - Get JSON object at as text
      */
     public function createPathSelector(string $fieldName, bool $asText = true): string
     {

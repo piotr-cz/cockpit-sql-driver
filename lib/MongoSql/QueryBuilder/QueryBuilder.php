@@ -29,7 +29,7 @@ abstract class QueryBuilder
     /**
      * Constructor
      *
-     * @param callable $connectionQuote - Connection quite callable
+     * @param callable $connectionQuote - Connection quote callable
      */
     public function __construct(callable $connectionQuote)
     {
@@ -87,7 +87,7 @@ abstract class QueryBuilder
     /**
      * Build ORDER BY subquery
      *
-     * @param array|null $sorts
+     * @param array [$sorts]
      * @return string|null
      */
     public function buildOrderby(array $sorts = null): ?string
@@ -113,8 +113,8 @@ abstract class QueryBuilder
     /**
      * Build LIMIT subquery
      *
-     * @param int|null $limit
-     * @param int|null $offset
+     * @param int [$limit]
+     * @param int [$offset]
      * @return string|null
      */
     public function buildLimit(int $limit = null, int $offset = null): ?string
@@ -135,7 +135,7 @@ abstract class QueryBuilder
     /**
      * Build WHERE subquery
      *
-     * @param array|null $criteria
+     * @param array [$criteria]
      * @return string|null
      */
     public function buildWhere(array $criteria = null): ?string
@@ -157,7 +157,7 @@ abstract class QueryBuilder
      * @see \MongoLite\Database\UtilArrayQuery::buildCondition
      *
      * @param array $criteria
-     * @param string $concat
+     * @param string [$concat]
      * @return string|null
      */
     protected function buildWhereSegments(array $criteria, string $concat = self::GLUE_OPERATOR_AND): ?string

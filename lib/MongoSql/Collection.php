@@ -51,7 +51,7 @@ class Collection implements CollectionInterface
     /** @var \MongoSql\QueryBuilder\QueryBuilder */
     protected $queryBuilder;
 
-    /** @var string Collection name */
+    /** @var string - Collection name */
     protected $collectionName;
 
     /** @var callable|null */
@@ -81,7 +81,7 @@ class Collection implements CollectionInterface
     /**
      * Create factory callable which takes on only $collectionName parameter
      *
-     * @param \PDO
+     * @param \PDO $connection
      * @param \MongoSql\QueryBuilder\QueryBuilder $queryBuilder
      * @param callable [$handleCollectionDrop]
      * @return callable
@@ -256,7 +256,7 @@ SQL
      * Replace document
      *
      * @param array $filter
-     * @param array $update Data to replace to the matched documents
+     * @param array $replace - Data to replace to the matched documents
      * @return bool
      */
     public function replaceOne(array $filter, array $replace): bool
@@ -337,6 +337,8 @@ SQL
     /**
      * Count documents
      * @note Deprecated in MongoDb 1.4 in favor of countDocuments
+     * @param array|callable [$filter]
+     * @return int
      */
     public function count($filter = []): int
     {
