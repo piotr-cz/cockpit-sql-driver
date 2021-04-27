@@ -59,21 +59,27 @@ class MysqlDriver extends Driver
      * Version string examples:
      * - MySQL: `5.7.27-0ubuntu0.18.04.1`
      * - MariaDB: `5.5.5-10.2.26-MariaDB-1:10.2.26+maria~bionic`
+     * - MariaDB: `5.5.5-10.4.18-MariaDB-cll-lve`
+     * - MariaDB: `10.4.18-MariaDB-cll-lve`
      */
     protected function assertIsDbSupported(): void
     {
         parent::assertIsDbSupported();
 
-        $currentVersion = $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+        $fullVersion = $this->connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+        $fullVersionFragments = explode('-', $fullVersion);
+
+        $currentVersion = array_shift($fullVersionFragments);
         $minVersion = static::DB_MIN_SERVER_VERSION;
 
-        // Remove MariaDBs' MySQL compat prefix
-        // See https://mariadb.atlassian.net/browse/MDEV-4088
-        // Note that query `SELECT VERSION()` won't return MySQL copat prefix
-        if (strpos($currentVersion, '-MariaDB') !== false) {
-            [$mariaDbVersion, $mySqlCompatVersion] = explode('-', $currentVersion, 2);
+        // Detect MariaDB
+        if (in_array('MariaDB', $fullVersionFragments)) {
+            // Detect MySQL compat prefix (replication version hack) if present as first fragment
+            // Note: Not present when using `SELECT VERSION()` query
+            if ($currentVersion === '5.5.5') {
+                $currentVersion = array_shift($fullVersionFragments);
+            }
 
-            $currentVersion = $mariaDbVersion;
             $minVersion = static::DB_MIN_SERVER_VERSION_MARIADB;
         }
 
